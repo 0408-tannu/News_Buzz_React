@@ -1754,13 +1754,13 @@ const Navbar = () => {
             sx={{
               mr: 2,
               fontWeight: 'bold',
-              fontSize: 'large',
+              fontSize: '18px',
               fontFamily: 'Quicksand',
               color: mode === 'dark' ? 'rgb(255, 255, 255)' : '#000',
               display: advancedSearchOpen ? 'none' : 'flex',
             }}
           >
-            add topic
+            Add Topic
           </Button>
 
           <Menu
