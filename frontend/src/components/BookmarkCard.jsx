@@ -1268,15 +1268,22 @@ const BookmarkCard = (props) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            border: 'none',
-            boxShadow: 'none',
+            borderRadius: '16px',
+            border: mode === 'light' ? '1px solid rgba(0,0,0,0.06)' : '1px solid rgba(255,255,255,0.06)',
+            boxShadow: mode === 'light'
+              ? '0 2px 12px rgba(0,0,0,0.06)'
+              : '0 2px 12px rgba(0,0,0,0.3)',
             width: '900px',
             height: '100%',
-            backgroundColor: mode === 'light' ? 'rgb(246, 246, 246)' : 'rgb(50, 50, 50)',
+            backgroundColor: mode === 'light' ? '#ffffff' : 'rgb(40, 40, 40)',
             '&:hover': {
-              backgroundColor: mode === 'light' ? 'rgb(240, 240, 240)' : 'rgb(60, 60, 60)',
+              boxShadow: mode === 'light'
+                ? '0 6px 24px rgba(0,0,0,0.1)'
+                : '0 6px 24px rgba(0,0,0,0.5)',
+              transform: 'translateY(-2px)',
+              backgroundColor: mode === 'light' ? '#ffffff' : 'rgb(48, 48, 48)',
             },
-            transition: 'background-color 0.3s ease',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
         >
           {/* Rest of your Card content remains the same */}
@@ -1338,7 +1345,7 @@ const BookmarkCard = (props) => {
               </div>
 
               {/* Title with Tooltip */}
-              <Tooltip title="click" placement="top" TransitionComponent={Zoom} arrow>
+              <Tooltip title="Read article" placement="top" TransitionComponent={Zoom} arrow>
                 <Typography
                   variant="h6"
                   component="div"

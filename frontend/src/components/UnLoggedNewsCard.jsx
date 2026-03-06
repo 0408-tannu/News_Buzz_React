@@ -75,14 +75,22 @@ const NewsCard = (props) => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            border: "none",
-            boxShadow: "none",
+            borderRadius: "16px",
+            border: mode === "light" ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.06)",
+            boxShadow: mode === "light"
+              ? "0 2px 12px rgba(0,0,0,0.06)"
+              : "0 2px 12px rgba(0,0,0,0.3)",
             width: "100%",
             backgroundColor:
-              mode === "light" ? "rgb(246, 246, 246)" : "rgb(50, 50, 50)",
+              mode === "light" ? "#ffffff" : "rgb(40, 40, 40)",
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             "&:hover": {
+              boxShadow: mode === "light"
+                ? "0 6px 24px rgba(0,0,0,0.1)"
+                : "0 6px 24px rgba(0,0,0,0.5)",
+              transform: "translateY(-2px)",
               backgroundColor:
-                mode === "light" ? "rgb(240, 240, 240)" : "rgb(60, 60, 60)",
+                mode === "light" ? "#ffffff" : "rgb(48, 48, 48)",
             },
           }}
         >
@@ -148,7 +156,7 @@ const NewsCard = (props) => {
                 )}
               </div>
 
-              <Tooltip title="click" placement="top" TransitionComponent={Zoom} arrow>
+              <Tooltip title="Read article" placement="top" TransitionComponent={Zoom} arrow>
                 <Typography
                   variant="h6"
                   component="div"
@@ -156,8 +164,11 @@ const NewsCard = (props) => {
                   onClick={loginPage}
                   sx={{
                     cursor: "pointer",
-                    color: "rgb(30, 144, 255)",
-                    "&:hover": { color: mode === "light" ? "blue" : "white" },
+                    color: mode === "light" ? "#1a1a2e" : "rgb(120, 180, 255)",
+                    fontWeight: 600,
+                    lineHeight: 1.4,
+                    transition: "color 0.2s ease",
+                    "&:hover": { color: "rgb(30, 144, 255)" },
                   }}
                 >
                   {props.title}
@@ -165,7 +176,7 @@ const NewsCard = (props) => {
               </Tooltip>
 
               {props.someText && (
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{ color: mode === "light" ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.6)", lineHeight: 1.6, mt: 0.5 }}>
                   {props.someText}
                 </Typography>
               )}
@@ -190,6 +201,7 @@ const NewsCard = (props) => {
                     maxWidth: "100%",
                     maxHeight: "150px",
                     objectFit: "cover",
+                    borderRadius: "12px",
                   }}
                 />
               </Box>
@@ -204,7 +216,7 @@ const NewsCard = (props) => {
             }}
           >
             <Box sx={{ display: "flex", justifyContent: "flex-start", pl: 2, mt: -1 }}>
-              <Typography variant="caption" color="text.secondary" fontSize="medium">
+              <Typography variant="caption" sx={{ color: mode === "light" ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.45)", fontSize: "0.8rem", fontWeight: 500 }}>
                 {props.time}
               </Typography>
             </Box>

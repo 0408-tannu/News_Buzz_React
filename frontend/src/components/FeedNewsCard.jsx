@@ -780,26 +780,33 @@ const FeedNewsCard = (props) => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            border: "none",
-            boxShadow: "none",
+            borderRadius: "16px",
+            border: mode === "light" ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.06)",
+            boxShadow: mode === "light"
+              ? "0 2px 12px rgba(0,0,0,0.06)"
+              : "0 2px 12px rgba(0,0,0,0.3)",
             width: "100%",
             height: "100% ",
-            // backgroundColor:"black",
             backgroundColor: showComments
               ? mode === "light"
-                ? "rgb(230, 230, 230)"
-                : "rgb(70, 70, 70)"
+                ? "rgb(245, 245, 250)"
+                : "rgb(55, 55, 60)"
               : mode === "light"
-                ? "rgb(246, 246, 246)"
-                : "rgb(50, 50, 50)",
+                ? "#ffffff"
+                : "rgb(40, 40, 40)",
+            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
             "&:hover": {
+              boxShadow: mode === "light"
+                ? "0 6px 24px rgba(0,0,0,0.1)"
+                : "0 6px 24px rgba(0,0,0,0.5)",
+              transform: "translateY(-2px)",
               backgroundColor: showComments
                 ? mode === "light"
-                  ? "rgb(220, 220, 220)"
-                  : "rgb(80, 80, 80)"
+                  ? "rgb(240, 240, 245)"
+                  : "rgb(60, 60, 65)"
                 : mode === "light"
-                  ? "rgb(240, 240, 240)"
-                  : "rgb(60, 60, 60)",
+                  ? "#ffffff"
+                  : "rgb(48, 48, 48)",
             },
           }}
         >
@@ -872,30 +879,18 @@ const FeedNewsCard = (props) => {
                 )}
               </div>
 
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "300px",
-                  //   backgroundColor: "black",
-                }}
-              >
-                {/* Article Image */}
-                {/* <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                        padding: 2,
-                      backgroundColor:"black"
-                    }}
-                  > */}
-                {props.imgURL && (
+              {props.imgURL && (
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "300px",
+                  }}
+                >
                   <Box
                     sx={{
                       display: "flex",
                       width: "100%",
                       height: "300px",
-                      //   backgroundColor: "gray",
                       alignItems: "center",
                       justifyContent: "center",
                       padding: 2,
@@ -904,24 +899,25 @@ const FeedNewsCard = (props) => {
                     <img
                       src={props.imgURL}
                       alt="Article"
-                      onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+                      onError={(e) => { e.target.parentElement.parentElement.style.display = 'none'; }}
                       style={{
-                        width: "50%",
+                        width: "100%",
                         height: "300px",
                         alignSelf: "center",
                         maxWidth: "100%",
                         maxHeight: "300px",
                         objectFit: "cover",
+                        borderRadius: "12px",
                       }}
                     />
                   </Box>
-                )}
-              </Box>
+                </Box>
+              )}
             </CardContent>
           </Box>
           {/* Title with Tooltip */}
           <Tooltip
-            title="click"
+            title="Read article"
             placement="top"
             TransitionComponent={Zoom}
             arrow
@@ -933,8 +929,11 @@ const FeedNewsCard = (props) => {
               onClick={handleClick}
               sx={{
                 cursor: "pointer",
-                color: "rgb(30, 144, 255)",
-                "&:hover": { color: mode === "light" ? "blue" : "white" },
+                color: mode === "light" ? "#1a1a2e" : "rgb(120, 180, 255)",
+                fontWeight: 600,
+                lineHeight: 1.4,
+                transition: "color 0.2s ease",
+                "&:hover": { color: "rgb(30, 144, 255)" },
                 pl: 2,
               }}
             >
@@ -944,7 +943,7 @@ const FeedNewsCard = (props) => {
 
           {/* Some Text */}
           {props.someText && (
-            <Typography variant="body2" color="text.secondary" sx={{ pl: 2 }}>
+            <Typography variant="body2" sx={{ color: mode === "light" ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.6)", lineHeight: 1.6, pl: 2 }}>
               {props.someText}
             </Typography>
           )}
@@ -958,7 +957,7 @@ const FeedNewsCard = (props) => {
               mt: 2,
             }}
           >
-            <Typography variant="caption" color="text.secondary" sx={{ pl: 2 }}>
+            <Typography variant="caption" sx={{ color: mode === "light" ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.45)", fontSize: "0.8rem", fontWeight: 500, pl: 2 }}>
               {props.time}
             </Typography>
 

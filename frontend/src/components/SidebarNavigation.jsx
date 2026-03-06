@@ -4,7 +4,7 @@ import {
   Drawer,
   IconButton,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Divider,
@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
@@ -29,6 +29,7 @@ import following_dark from "../images/following_dark.png";
 const SidebarNavigation = ({ open, setOpen }) => {
   const { mode, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   const toggleDrawer = (state) => () => setOpen(state);
@@ -95,9 +96,9 @@ const SidebarNavigation = ({ open, setOpen }) => {
           "& .MuiDrawer-paper": {
             width: open ? 220 : 64,
             boxSizing: "border-box",
-            background: mode === "dark" ? "#121212" : "#f9f9f9",
+            background: mode === "dark" ? "#1a1a1a" : "#ffffff",
             color: mode === "dark" ? "#fff" : "#000",
-            borderRight: `1px solid ${mode === "dark" ? "#444" : "#ddd"}`,
+            borderRight: `1px solid ${mode === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
             transition: "width 0.3s ease",
             overflowX: "hidden",
             display: "flex",
@@ -116,23 +117,29 @@ const SidebarNavigation = ({ open, setOpen }) => {
                 sx={{ borderColor: mode === "dark" ? "#444" : "#ddd", my: 1 }}
               />
             ) : (
-              <ListItem
-                button
+              <ListItemButton
                 key={item.title}
                 onClick={loggedIn ? () => navigate(item.path) : loginPage}
+                selected={location.pathname === item.path}
                 sx={{
                   "&:hover": {
-                    backgroundColor: mode === "dark" ? "#333" : "#eee",
+                    backgroundColor: mode === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)",
+                  },
+                  "&.Mui-selected": {
+                    backgroundColor: mode === "dark" ? "rgba(30,144,255,0.15)" : "rgba(30,144,255,0.1)",
+                    borderRight: "3px solid rgb(30,144,255)",
+                    "&:hover": {
+                      backgroundColor: mode === "dark" ? "rgba(30,144,255,0.2)" : "rgba(30,144,255,0.15)",
+                    },
                   },
                   py: 1.2,
                   px: open ? 2 : 0,
                   mb: 0.5,
                   borderRadius: "8px",
-                  transition: "background-color 0.3s ease",
+                  transition: "all 0.2s ease",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: open ? "flex-start" : "center",
-                  cursor: "pointer",
                 }}
               >
                 <Tooltip title={!open ? item.title : ""} placement="right">
@@ -182,7 +189,7 @@ const SidebarNavigation = ({ open, setOpen }) => {
                     }}
                   />
                 )}
-              </ListItem>
+              </ListItemButton>
             )
           )}
         </List>
@@ -192,22 +199,20 @@ const SidebarNavigation = ({ open, setOpen }) => {
           <Divider sx={{ borderColor: mode === "dark" ? "#444" : "#ddd", mb: 1 }} />
 
           {/* Theme Toggle */}
-          <ListItem
-            button
+          <ListItemButton
             onClick={toggleTheme}
             sx={{
               "&:hover": {
-                backgroundColor: mode === "dark" ? "#333" : "#eee",
+                backgroundColor: mode === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)",
               },
               py: 1.2,
               px: open ? 2 : 0,
               mb: 0.5,
               borderRadius: "8px",
-              transition: "background-color 0.3s ease",
+              transition: "all 0.2s ease",
               display: "flex",
               alignItems: "center",
               justifyContent: open ? "flex-start" : "center",
-              cursor: "pointer",
             }}
           >
             <Tooltip title={!open ? (mode === "dark" ? "Light Mode" : "Dark Mode") : ""} placement="right">
@@ -245,25 +250,23 @@ const SidebarNavigation = ({ open, setOpen }) => {
                 }}
               />
             )}
-          </ListItem>
+          </ListItemButton>
 
           {/* Logout */}
-          <ListItem
-            button
+          <ListItemButton
             onClick={handleLogout}
             sx={{
               "&:hover": {
-                backgroundColor: mode === "dark" ? "#333" : "#eee",
+                backgroundColor: mode === "dark" ? "rgba(255,107,107,0.1)" : "rgba(211,47,47,0.06)",
               },
               py: 1.2,
               px: open ? 2 : 0,
               mb: 0.5,
               borderRadius: "8px",
-              transition: "background-color 0.3s ease",
+              transition: "all 0.2s ease",
               display: "flex",
               alignItems: "center",
               justifyContent: open ? "flex-start" : "center",
-              cursor: "pointer",
             }}
           >
             <Tooltip title={!open ? "Logout" : ""} placement="right">
@@ -295,7 +298,7 @@ const SidebarNavigation = ({ open, setOpen }) => {
                 sx={{ m: 0 }}
               />
             )}
-          </ListItem>
+          </ListItemButton>
         </Box>
       </Drawer>
     </>

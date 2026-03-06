@@ -570,6 +570,7 @@ const Home = () => {
                     variant="rounded"
                     width={800}
                     height={140}
+                    sx={{ borderRadius: "16px", mb: 2 }}
                   />
                 ))}
               </Grid>
@@ -624,23 +625,38 @@ const Home = () => {
 
 
           {!isLoggedIn && (
-            <button
-
-              type="submit"
-              style={{
-                fontFamily: "'Quicksand', 'Arial', sans-serif",
-                fontWeight: "bold",
-                borderRadius: "12px",
-                backgroundColor: "#134611",
-                color: "white",
-                cursor: "pointer",
-                width: "100%",
-                padding: "10px",
-              }}
-              onClick={LoginPage}
-            >
-              Login to view more articles
-            </button>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 4, px: 2 }}>
+              <button
+                type="submit"
+                style={{
+                  fontFamily: "'Quicksand', 'Arial', sans-serif",
+                  fontWeight: "bold",
+                  fontSize: "16px",
+                  borderRadius: "50px",
+                  border: "none",
+                  background: "linear-gradient(135deg, #1a8754 0%, #134611 100%)",
+                  color: "white",
+                  cursor: "pointer",
+                  maxWidth: "400px",
+                  width: "100%",
+                  padding: "14px 32px",
+                  boxShadow: "0 4px 16px rgba(19, 70, 17, 0.3)",
+                  transition: "all 0.3s ease",
+                  letterSpacing: "0.5px",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 6px 24px rgba(19, 70, 17, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 4px 16px rgba(19, 70, 17, 0.3)';
+                }}
+                onClick={LoginPage}
+              >
+                Login to view more articles
+              </button>
+            </Box>
           )}
 
           {isLoggedIn && (
