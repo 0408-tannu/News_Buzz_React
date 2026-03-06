@@ -1182,8 +1182,36 @@ const Navbar = () => {
 
 
             {TokenExist && (<>
-              <div>
-                <div className="d-flex mx-auto" style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', flex: 1, justifyContent: 'center', gap: '12px' }}>
+                <Tooltip title="My Account" placement="bottom" arrow>
+                  <Button
+                    onClick={() => navigate('/account')}
+                    startIcon={<AccountCircleRoundedIcon sx={{ fontSize: 42 }} />}
+                    sx={{
+                      color: mode === 'dark' ? '#fff' : '#1a1a2e',
+                      textTransform: 'none',
+                      fontFamily: 'Quicksand, Arial, sans-serif',
+                      fontWeight: 800,
+                      fontSize: '1.15rem',
+                      letterSpacing: '0.3px',
+                      px: 2,
+                      py: 0.8,
+                      borderRadius: '50px',
+                      border: mode === 'dark' ? '1.5px solid rgba(255,255,255,0.15)' : '1.5px solid rgba(0,0,0,0.1)',
+                      whiteSpace: 'nowrap',
+                      '&:hover': {
+                        backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.12)' : 'rgba(30,144,255,0.06)',
+                        borderColor: 'rgb(30,144,255)',
+                        color: 'rgb(30,144,255)',
+                      },
+                      transition: 'all 0.25s ease',
+                    }}
+                  >
+                    My Account
+                  </Button>
+                </Tooltip>
+
+                <div className="d-flex" style={{ justifyContent: 'center', alignItems: 'center' }}>
                   <Box
                     component="form"
                     onSubmit={handleSearch}
@@ -1533,36 +1561,6 @@ const Navbar = () => {
                 )}
               </div>
             </>)}
-
-            {TokenExist && (
-              <Tooltip title="My Account" placement="bottom" arrow>
-                <Button
-                  onClick={() => navigate('/account')}
-                  startIcon={<AccountCircleRoundedIcon sx={{ fontSize: 42 }} />}
-                  sx={{
-                    ml: 3,
-                    color: mode === 'dark' ? '#fff' : '#1a1a2e',
-                    textTransform: 'none',
-                    fontFamily: 'Quicksand, Arial, sans-serif',
-                    fontWeight: 800,
-                    fontSize: '1.25rem',
-                    letterSpacing: '0.3px',
-                    px: 2,
-                    py: 1,
-                    borderRadius: '50px',
-                    border: mode === 'dark' ? '1.5px solid rgba(255,255,255,0.15)' : '1.5px solid rgba(0,0,0,0.1)',
-                    '&:hover': {
-                      backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.12)' : 'rgba(30,144,255,0.06)',
-                      borderColor: 'rgb(30,144,255)',
-                      color: 'rgb(30,144,255)',
-                    },
-                    transition: 'all 0.25s ease',
-                  }}
-                >
-                  My Account
-                </Button>
-              </Tooltip>
-            )}
 
             <form className="d-flex mx-5">
               {TokenExist ? (
