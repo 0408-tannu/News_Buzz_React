@@ -19,6 +19,8 @@ import NewsProviderPageFollowing from './pages/NewsProviderPageFollowing.jsx';
 import QuizApp from './components/QuizApp.jsx';
 import History from './pages/History';
 import ProviderPage from './pages/ProviderPage.jsx';
+import AboutUs from './pages/AboutUs.jsx';
+import ContactUs from './pages/ContactUs.jsx';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import quiz from './images/quiz.png';
@@ -40,7 +42,7 @@ function App() {
   const authRoutes = ['/login', '/signup'];
   const isAuthRoute = authRoutes.includes(location.pathname);
 
-  const validRoutes = ['/', '/login', '/signup', '/search', '/myfeed', '/history', '/account', '/bookmark', '/providers/all', '/providers/following', '/quiz'];
+  const validRoutes = ['/', '/login', '/signup', '/search', '/myfeed', '/history', '/account', '/bookmark', '/providers/all', '/providers/following', '/quiz', '/about', '/contact'];
   const validRoutesForQuiz = ['/', '/search', '/myfeed', '/history', '/account', '/bookmark', '/providers/all', '/providers/following'];
   const hideNavbar_SidebarRoutes = ['/login', '/signup'];
 
@@ -156,6 +158,8 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
           <Route path="/quiz" element={<QuizApp />} />
           <Route path="/history" element={<History />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<ContactUs />} />
         </Routes>
       </Box>
     </Box>

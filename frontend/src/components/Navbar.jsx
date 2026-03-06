@@ -1161,19 +1161,27 @@ const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
-                  className={`nav-link active ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
-                  aria-current="page"
-                  to="/"
-                  style={{ fontSize: '18px' }} // Adjust the size here
+                  className={`nav-link ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
+                  to="/about"
+                  style={{ fontSize: '18px' }}
                 >
-                  Home
+                  About Us
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className={`nav-link ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
+                  to="/contact"
+                  style={{ fontSize: '18px' }}
+                >
+                  Contact Us
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
                   className={`nav-link ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
                   to="/providers/all"
-                  style={{ fontSize: '18px' }} // Adjust the size here
+                  style={{ fontSize: '18px' }}
                 >
                   Providers
                 </Link>
