@@ -57,20 +57,20 @@ const NewsCard = (props) => {
     <Box
       sx={{
         display: "flex",
-        alignItems: "center",
+        alignItems: "stretch",
         justifyContent: "center",
-        maxWidth: 800,
-        margin: "20px auto",
+        width: { xs: "100%", sm: "48%", md: "380px" },
+        maxWidth: 420,
+        margin: "10px",
         position: "relative",
         "&:hover .action-buttons": {
           opacity: 1,
           visibility: "visible",
         },
-        width: "100%",
-        height: "100%",
+        height: "auto",
       }}
     >
-      <Box sx={{ flex: 1, maxWidth: 850 }}>
+      <Box sx={{ flex: 1 }}>
         <Card
           sx={{
             display: "flex",

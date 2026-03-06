@@ -321,17 +321,17 @@ const HistoryNewsCard = (props) => {
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
+          alignItems: "stretch",
           justifyContent: "center",
-          maxWidth: 800,
-          margin: "20px auto",
+          width: { xs: "100%", sm: "48%", md: "380px" },
+          maxWidth: 420,
+          margin: "10px",
           position: "relative",
           "&:hover .action-buttons": {
             opacity: 1,
             visibility: "visible",
           },
-          width: "100%",
-          height: "100%",
+          height: "auto",
         }}
       >
         <Card
@@ -341,7 +341,8 @@ const HistoryNewsCard = (props) => {
             border: "none",
             boxShadow: "none",
             width: "100%",
-            height: "150px",
+            height: "auto",
+            minHeight: "150px",
             backgroundColor:
               mode === "light" ? "rgb(246, 246, 246)" : "rgb(50, 50, 50)",
             "&:hover": {

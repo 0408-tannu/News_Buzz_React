@@ -1241,11 +1241,12 @@ const BookmarkCard = (props) => {
       ref={boxRef}
       sx={{
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'stretch',
         justifyContent: 'center',
-        maxWidth: 950,
-        height: isRemoving ? '0' : '100%',
-        margin: isRemoving ? '0' : '20px auto',
+        width: { xs: '100%', sm: '48%', md: '380px' },
+        maxWidth: 420,
+        height: isRemoving ? '0' : 'auto',
+        margin: isRemoving ? '0' : '10px',
         position: 'relative',
         opacity: isRemoving ? 0 : 1,
         transform: isRemoving ? 'translateX(-100%)' : 'translateX(0)',
@@ -1261,7 +1262,6 @@ const BookmarkCard = (props) => {
       <Box
         sx={{
           flex: 1,
-          maxWidth: 850,
         }}
       >
         <Card
@@ -1273,7 +1273,7 @@ const BookmarkCard = (props) => {
             boxShadow: mode === 'light'
               ? '0 2px 12px rgba(0,0,0,0.06)'
               : '0 2px 12px rgba(0,0,0,0.3)',
-            width: '900px',
+            width: '100%',
             height: '100%',
             backgroundColor: mode === 'light' ? '#ffffff' : 'rgb(40, 40, 40)',
             '&:hover': {

@@ -97,20 +97,7 @@ const History = () => {
           }
           style={{ overflow: "visible" }}
         >
-          <div style={{ marginTop: "50px" }}>
-            <Grid container>
-              <Grid
-                item
-                md={12}
-                xs={9}
-                sm={10}
-                sx={{
-                  position: "relative",
-                  //   backgroundColor: "black"
-                }}
-                style={parentstyle}
-              >
-                <div style={{ gridTemplateColumns: "1fr", height: "150px" }}>
+          <div style={{ marginTop: "50px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px", padding: "0 20px" }}>
                   {HistoryArray.map(
                     (article, index) =>
                       article && (
@@ -125,9 +112,6 @@ const History = () => {
                         />
                       )
                   )}
-                </div>
-              </Grid>
-            </Grid>
           </div>
         </InfiniteScroll>
       </div>

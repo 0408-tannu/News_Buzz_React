@@ -406,12 +406,12 @@ const Bookmark = () => {
             ) : null
           }
 
-          style={{ overflow: 'visible' }}
+          style={{ overflow: 'visible', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', padding: '0 20px' }}
         >
           {displayedArticles.map((article, index) => (
             article && (
-              <div className="box" key={index}>
                 <BookmarkCard
+                  key={index}
                   title={article.title}
                   link={article.link}
                   // time={article.time}
@@ -419,7 +419,6 @@ const Bookmark = () => {
                   providerName={article.providerName}
 
                 />
-              </div>
             )
           ))}
         </InfiniteScroll>

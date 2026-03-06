@@ -769,11 +769,10 @@ const FeedNewsCard = (props) => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          margin: "20px",
-          width: "100%",
+          margin: "10px",
+          width: { xs: "100%", sm: "48%", md: "380px" },
+          maxWidth: 420,
           height: "auto",
-          maxWidth: 800,
-          maxHeight: 800,
         }}
       >
         <Card

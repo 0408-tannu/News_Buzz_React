@@ -656,10 +656,10 @@ const SearchResults = (props) => {
           </div>
         ) : (
           <>
-            <div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', padding: '0 20px' }}>
               {filteredArticles.map((article, index) => (
-                <div key={index}>
                   <NewsCard
+                    key={index}
                     title={article.title}
                     someText={article.someText}
                     imgURL={article.imgURL}
@@ -668,7 +668,6 @@ const SearchResults = (props) => {
                     providerImg={article.providerImg}
                     providerName={article.providerName}
                   />
-                </div>
               ))}
             </div>
             {isFetchingNextPage && (

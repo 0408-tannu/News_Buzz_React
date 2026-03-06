@@ -425,30 +425,10 @@ const MyFeed = () => {
           />
         </Box>
 
-        <div style={{ marginTop: "50px" }}>
-          <Grid container>
-            <Grid
-              item
-              md={12}
-              xs={9}
-              sm={10}
-              sx={{ position: "relative" }}
-              style={parentstyle}
-            >
-              <Grid
-                container
-                spacing={3}
-                style={{
-                  // backgroundColor:"black",
-                  padding: "5px",
-                  margin: "5px",
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                }}
-              >
+        <div style={{ marginTop: "50px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px", padding: "0 20px" }}>
                 {filteredArticles.map((article, index) => (
                   <FeedNewsCard
+                    key={index}
                     title={article.title}
                     someText={article.someText}
                     imgURL={article.imgURL}
@@ -458,9 +438,6 @@ const MyFeed = () => {
                     providerName={article.providerName}
                   />
                 ))}
-              </Grid>
-            </Grid>
-          </Grid>
         </div>
 
         {isLoading && (
