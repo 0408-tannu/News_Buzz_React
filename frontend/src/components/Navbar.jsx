@@ -1538,14 +1538,14 @@ const Navbar = () => {
               <Tooltip title="My Account" placement="bottom">
                 <Button
                   onClick={() => navigate('/account')}
-                  startIcon={<AccountCircleRoundedIcon sx={{ fontSize: 28 }} />}
+                  startIcon={<AccountCircleRoundedIcon sx={{ fontSize: 36 }} />}
                   sx={{
                     ml: 2,
                     color: mode === 'dark' ? '#e0e0e0' : '#333',
                     textTransform: 'none',
                     fontFamily: 'Quicksand, Arial, sans-serif',
-                    fontWeight: 600,
-                    fontSize: '0.95rem',
+                    fontWeight: 700,
+                    fontSize: '1.1rem',
                     '&:hover': {
                       backgroundColor: mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
                     },
