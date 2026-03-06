@@ -4,6 +4,7 @@ import { Box, Typography, TextField, Button } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import toast from 'react-hot-toast';
 
 const ContactUs = () => {
@@ -25,14 +26,22 @@ const ContactUs = () => {
     borderRadius: '20px',
     padding: '32px',
     boxShadow: mode === 'dark'
-      ? '0 4px 20px rgba(0,0,0,0.3)'
-      : '0 4px 20px rgba(0,0,0,0.08)',
+      ? '0 4px 24px rgba(0,0,0,0.3)'
+      : '0 4px 24px rgba(0,0,0,0.08)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    '&:hover': {
+      transform: 'translateY(-4px)',
+      boxShadow: mode === 'dark'
+        ? '0 8px 32px rgba(30,144,255,0.2)'
+        : '0 8px 32px rgba(30,144,255,0.15)',
+    },
   };
 
   const inputSx = {
     '& .MuiOutlinedInput-root': {
       borderRadius: '12px',
       fontFamily: "'Quicksand', sans-serif",
+      color: mode === 'dark' ? '#fff' : '#1a1a2e',
       '& fieldset': {
         borderColor: mode === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)',
       },
@@ -45,11 +54,28 @@ const ContactUs = () => {
     },
     '& .MuiInputLabel-root': {
       fontFamily: "'Quicksand', sans-serif",
+      color: mode === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.5)',
     },
   };
 
+  const iconBoxStyle = {
+    p: 1.2,
+    borderRadius: '12px',
+    background: 'linear-gradient(135deg, rgba(30,144,255,0.15), rgba(30,144,255,0.05))',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
+  const contactItems = [
+    { icon: <EmailIcon sx={{ fontSize: 24, color: 'rgb(30, 144, 255)' }} />, label: 'Email', value: 'support@newsbuzz.com' },
+    { icon: <PhoneIcon sx={{ fontSize: 24, color: 'rgb(30, 144, 255)' }} />, label: 'Phone', value: '+91 98765 43210' },
+    { icon: <LocationOnIcon sx={{ fontSize: 24, color: 'rgb(30, 144, 255)' }} />, label: 'Location', value: 'Gujarat, India' },
+    { icon: <AccessTimeIcon sx={{ fontSize: 24, color: 'rgb(30, 144, 255)' }} />, label: 'Response Time', value: 'Within 24 hours' },
+  ];
+
   return (
-    <div style={{ marginTop: '130px', padding: '20px 40px', maxWidth: '1000px', margin: '130px auto 40px' }}>
+    <div style={{ marginTop: '130px', padding: '20px 40px', maxWidth: '1100px', margin: '130px auto 60px' }}>
       <Typography
         variant="h3"
         sx={{
@@ -58,21 +84,22 @@ const ContactUs = () => {
           textAlign: 'center',
           mb: 2,
           color: mode === 'dark' ? '#fff' : '#1a1a2e',
+          fontSize: { xs: '2rem', md: '2.8rem' },
         }}
       >
-        Contact <span style={{ color: 'rgb(30, 144, 255)' }}>Us</span>
+        Contact <span style={{ background: 'linear-gradient(135deg, rgb(30,144,255), rgb(0,100,200))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Us</span>
       </Typography>
 
       <Typography
-        variant="h6"
         sx={{
           fontFamily: "'Quicksand', sans-serif",
           fontWeight: 400,
+          fontSize: '1.1rem',
           textAlign: 'center',
-          mb: 5,
           color: mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.5)',
           maxWidth: '600px',
           margin: '0 auto 40px',
+          lineHeight: 1.8,
         }}
       >
         Have questions, feedback, or suggestions? We'd love to hear from you!
@@ -85,29 +112,15 @@ const ContactUs = () => {
             Get in Touch
           </Typography>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-            <EmailIcon sx={{ color: 'rgb(30, 144, 255)', fontSize: 28 }} />
-            <Box>
-              <Typography sx={{ fontFamily: "'Quicksand', sans-serif", fontWeight: 600, color: mode === 'dark' ? '#fff' : '#1a1a2e' }}>Email</Typography>
-              <Typography sx={{ fontFamily: "'Quicksand', sans-serif", color: mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)' }}>support@newsbuzz.com</Typography>
+          {contactItems.map((item, idx) => (
+            <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: idx < contactItems.length - 1 ? 3 : 0 }}>
+              <Box sx={iconBoxStyle}>{item.icon}</Box>
+              <Box>
+                <Typography sx={{ fontFamily: "'Quicksand', sans-serif", fontWeight: 600, color: mode === 'dark' ? '#fff' : '#1a1a2e', fontSize: '15px' }}>{item.label}</Typography>
+                <Typography sx={{ fontFamily: "'Quicksand', sans-serif", color: mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.55)', fontSize: '14px' }}>{item.value}</Typography>
+              </Box>
             </Box>
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-            <PhoneIcon sx={{ color: 'rgb(30, 144, 255)', fontSize: 28 }} />
-            <Box>
-              <Typography sx={{ fontFamily: "'Quicksand', sans-serif", fontWeight: 600, color: mode === 'dark' ? '#fff' : '#1a1a2e' }}>Phone</Typography>
-              <Typography sx={{ fontFamily: "'Quicksand', sans-serif", color: mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)' }}>+91 98765 43210</Typography>
-            </Box>
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <LocationOnIcon sx={{ color: 'rgb(30, 144, 255)', fontSize: 28 }} />
-            <Box>
-              <Typography sx={{ fontFamily: "'Quicksand', sans-serif", fontWeight: 600, color: mode === 'dark' ? '#fff' : '#1a1a2e' }}>Location</Typography>
-              <Typography sx={{ fontFamily: "'Quicksand', sans-serif", color: mode === 'dark' ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.6)' }}>Gujarat, India</Typography>
-            </Box>
-          </Box>
+          ))}
         </Box>
 
         {/* Contact Form */}

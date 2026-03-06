@@ -1162,8 +1162,17 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
+                  to="/providers/all"
+                  style={{ fontSize: '16px', fontFamily: "'Quicksand', sans-serif", fontWeight: 600 }}
+                >
+                  Providers
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className={`nav-link ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
                   to="/about"
-                  style={{ fontSize: '18px' }}
+                  style={{ fontSize: '16px', fontFamily: "'Quicksand', sans-serif", fontWeight: 600 }}
                 >
                   About Us
                 </Link>
@@ -1172,18 +1181,9 @@ const Navbar = () => {
                 <Link
                   className={`nav-link ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
                   to="/contact"
-                  style={{ fontSize: '18px' }}
+                  style={{ fontSize: '16px', fontFamily: "'Quicksand', sans-serif", fontWeight: 600 }}
                 >
                   Contact Us
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
-                  to="/providers/all"
-                  style={{ fontSize: '18px' }}
-                >
-                  Providers
                 </Link>
               </li>
             </ul>
