@@ -425,7 +425,7 @@ const HistoryNewsCard = (props) => {
                 visibility: "hidden",
               }}
             >
-              <Tooltip title="Save" placement="bottom" arrow>
+              <Tooltip title="Remove from history" placement="bottom" arrow>
                 <IconButton
                   sx={{
                     height: "48px",
@@ -433,7 +433,7 @@ const HistoryNewsCard = (props) => {
                     alignSelf: "center",
                     marginBottom: "8px",
                   }}
-                  aria-label="save"
+                  aria-label="delete"
                   onClick={handleDeleteClick}
                 >
                   <AutoDeleteRoundedIcon />

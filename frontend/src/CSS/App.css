@@ -1,9 +1,5 @@
-/* Hide the default cursor completely */
+/* App styles */
 .App {
-  cursor: none;
+  /* cursor styles handled by CustomCursor component if enabled */
 }
-
-/* Prevent cursor from reappearing on clickable elements */
-* {
-  cursor: none !important;
 }

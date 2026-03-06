@@ -541,7 +541,7 @@ const Home = () => {
         />
       </Box>
       {isLoading ? (
-        <div style={{ marginTop: "50px" ,backgroundColor:"black"} }>
+        <div style={{ marginTop: "50px" }}>
           <Grid container>
             <Grid
               item
@@ -553,7 +553,7 @@ const Home = () => {
             >
               <Grid
                 container
-                spacing={300} // This adds space between each card (Grid items)
+                spacing={3}
                 style={{
                   // backgroundColor: "black",
                   padding: "5px",
@@ -595,7 +595,7 @@ const Home = () => {
               >
                 <Grid
                   container
-                  spacing={300} // This adds space between each card (Grid items)
+                  spacing={3}
                   style={{
                     // backgroundColor:"black",
                     padding: "5px",
@@ -609,6 +609,7 @@ const Home = () => {
                     (article, index) =>
                       article && (
                         <UnLoggedNewsCard
+                          key={index}
                           title={article.title.substring(0, 90) + "..."}
                           link={article.link}
                           time={article.time}

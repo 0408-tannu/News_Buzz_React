@@ -565,18 +565,15 @@ const FeedNewsCard = (props) => {
   const isSearchPage =
     location.pathname === "/search" || location.pathname === "/myfeed";
 
-  const handleClick = () => {
-
-    const response = POST("/api/history/add", { title: props.title, link: props.link });
-
+  const handleClick = async () => {
+    const response = await POST("/api/history/add", { title: props.title, link: props.link });
     if (response.data?.success === false) {
       toast.error(response.data?.message);
     }
-
     if (response.data?.caught) {
       navigate("/login");
+      return;
     }
-
     window.open(props.link, "_blank");
   };
 
@@ -628,7 +625,7 @@ const FeedNewsCard = (props) => {
         // toast.error(NumLikesResult.data?.message);
       }
     })();
-  }, [props.title, numLikes, navigate]);
+  }, [props.title, navigate]);
 
   useEffect(() => {
     (async () => {
@@ -643,7 +640,7 @@ const FeedNewsCard = (props) => {
         // toast.error(numCommentsResult.data?.message);
       }
     })();
-  }, [props.link, numComments, navigate]);
+  }, [props.link, navigate]);
 
   const handleBookmarkClick = async () => {
     setBookmarked(!bookmarked);

@@ -41,7 +41,7 @@ const SidebarNavigation = ({ open, setOpen }) => {
     } else {
       setLoggedIn(true);
     }
-  }, [loggedIn]);
+  }, []);
 
   const loginPage = () => {
     navigate("/login");

@@ -1116,16 +1116,14 @@ const BookmarkCard = (props) => {
   const boxRef = useRef(null);
   const navigate = useNavigate();
 
-  const handleClick = () => {
-
-    const response = POST("/api/history/add", { title: props.title, link: props.link });
-
+  const handleClick = async () => {
+    const response = await POST("/api/history/add", { title: props.title, link: props.link });
     if (response.data?.success === false) {
       toast.error(response.data?.message);
     }
-
     if (response.data?.caught) {
       navigate("/login");
+      return;
     }
     window.open(props.link, '_blank');
   };

@@ -437,7 +437,7 @@ const MyFeed = () => {
             >
               <Grid
                 container
-                spacing={300} // This adds space between each card (Grid items)
+                spacing={3}
                 style={{
                   // backgroundColor:"black",
                   padding: "5px",
