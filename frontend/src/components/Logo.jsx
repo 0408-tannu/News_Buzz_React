@@ -3,72 +3,84 @@ import { ThemeContext } from '../context/ThemeContext';
 
 const Logo = ({ height = 50 }) => {
   const { mode } = useContext(ThemeContext);
-  const textColor = mode === 'dark' ? '#ffffff' : '#1a1a2e';
+  const textColor = mode === 'dark' ? '#ffffff' : '#1e1e2f';
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 300 64"
+      viewBox="0 0 310 64"
       height={height}
       fill="none"
       style={{ display: 'block' }}
     >
       <defs>
-        <linearGradient id="logoBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#4facfe" />
-          <stop offset="100%" stopColor="#0066ff" />
+        <linearGradient id="lBlue" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#00b4d8" />
+          <stop offset="50%" stopColor="#0077b6" />
+          <stop offset="100%" stopColor="#023e8a" />
         </linearGradient>
-        <linearGradient id="logoOrange" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#ff9a56" />
-          <stop offset="100%" stopColor="#ff5e62" />
+        <linearGradient id="lAccent" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#f72585" />
+          <stop offset="100%" stopColor="#ff5400" />
         </linearGradient>
-        <filter id="logoShadow" x="-10%" y="-10%" width="130%" height="140%">
-          <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#0066ff" floodOpacity="0.25" />
-        </filter>
+        <linearGradient id="lBg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#0077b6" />
+          <stop offset="100%" stopColor="#00b4d8" />
+        </linearGradient>
       </defs>
 
-      {/* Icon: Globe/newspaper hybrid */}
-      <g filter="url(#logoShadow)">
-        <circle cx="30" cy="32" r="24" fill="url(#logoBlue)" />
-        {/* Lightning bolt / breaking news flash */}
-        <path
-          d="M24 18l8 0l-3 10h6l-12 18l3-12h-6z"
-          fill="white"
-          opacity="0.95"
+      {/* Hexagonal badge icon */}
+      <g transform="translate(32, 32)">
+        {/* Outer hexagon */}
+        <polygon
+          points="0,-26 22.5,-13 22.5,13 0,26 -22.5,13 -22.5,-13"
+          fill="url(#lBlue)"
         />
+        {/* Inner newspaper icon */}
+        <rect x="-12" y="-14" width="24" height="28" rx="3" fill="white" opacity="0.95" />
+        <rect x="-8" y="-10" width="10" height="3" rx="1" fill="#0077b6" />
+        <rect x="-8" y="-5" width="16" height="2" rx="0.5" fill="#0077b6" opacity="0.4" />
+        <rect x="-8" y="-1" width="16" height="2" rx="0.5" fill="#0077b6" opacity="0.3" />
+        <rect x="-8" y="3" width="12" height="2" rx="0.5" fill="#0077b6" opacity="0.25" />
+        <rect x="-8" y="7" width="14" height="2" rx="0.5" fill="#0077b6" opacity="0.2" />
+        {/* Red "live" dot */}
+        <circle cx="8" cy="-10" r="3" fill="url(#lAccent)" />
       </g>
 
-      {/* "News" text - bold dark */}
+      {/* "News" in bold */}
       <text
-        x="64"
-        y="43"
-        fontFamily="'Quicksand', 'Poppins', sans-serif"
-        fontSize="34"
+        x="66"
+        y="42"
+        fontFamily="'Quicksand', 'Inter', sans-serif"
+        fontSize="36"
         fontWeight="800"
         fill={textColor}
-        letterSpacing="-0.5"
+        letterSpacing="-1"
       >
         News
       </text>
 
-      {/* "Buzz" text - gradient blue */}
+      {/* "Buzz" in gradient */}
       <text
-        x="168"
-        y="43"
-        fontFamily="'Quicksand', 'Poppins', sans-serif"
-        fontSize="34"
+        x="173"
+        y="42"
+        fontFamily="'Quicksand', 'Inter', sans-serif"
+        fontSize="36"
         fontWeight="800"
-        fill="url(#logoBlue)"
-        letterSpacing="-0.5"
+        fill="url(#lBlue)"
+        letterSpacing="-1"
       >
         Buzz
       </text>
 
-      {/* Underline accent bar */}
-      <rect x="168" y="48" width="55" height="3.5" rx="2" fill="url(#logoOrange)" />
-
-      {/* Small dot indicator */}
-      <circle cx="263" cy="42" r="5" fill="url(#logoOrange)" />
+      {/* Animated-style underline swoosh */}
+      <path
+        d="M173 50 Q200 55 260 48"
+        stroke="url(#lAccent)"
+        strokeWidth="3"
+        fill="none"
+        strokeLinecap="round"
+      />
     </svg>
   );
 };
