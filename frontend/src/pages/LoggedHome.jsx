@@ -486,7 +486,6 @@ import React, { useEffect, useState, useContext } from 'react';
 import NewsCard from '../components/NewsCard';
 import { GET } from '../api.js';
 import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import TextField from '@mui/material/TextField';
@@ -578,7 +577,6 @@ const LoggedHome = () => {
     <div
       style={{
         overflow: "visible",
-        marginTop: "130px",
       }}
     >
       <Box
@@ -586,10 +584,9 @@ const LoggedHome = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          padding: "10px",
+          padding: "8px 0",
           borderRadius: "25px",
           transition: "width 0.25s ease-in-out",
-          // backgroundColor: "black",
         }}
       >
         <TextField
@@ -599,9 +596,7 @@ const LoggedHome = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search from given articles..."
           sx={{
-            m: 1,
-            width: "600px",
-            height: "100%",
+            width: "550px",
             borderRadius: "50px",
             bgcolor: mode === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)",
             transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -625,7 +620,7 @@ const LoggedHome = () => {
               bgcolor: mode === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)",
             },
             "&:focus-within": {
-              width: "750px",
+              width: "650px",
               bgcolor: mode === "dark" ? "rgba(255,255,255,0.12)" : "#fff",
               boxShadow: "0 4px 20px rgba(30, 144, 255, 0.12)",
               "& .MuiInputAdornment-root .MuiSvgIcon-root": {
@@ -650,51 +645,74 @@ const LoggedHome = () => {
         />
       </Box>
       {isLoading ? (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px", padding: "20px 40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", padding: "12px 0" }}>
           {[1, 2, 3, 4, 5, 6].map((item, index) => (
             <Skeleton
               animation="wave"
               key={index}
               variant="rounded"
-              height={200}
-              sx={{ borderRadius: "16px" }}
+              height={180}
+              sx={{ borderRadius: "12px" }}
             />
           ))}
         </div>
       ) : isError ? (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <span>Error fetching articles.</span>
-        </div>
+        <Box sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          py: 8,
+          gap: 2,
+        }}>
+          <span style={{
+            fontSize: "1.1rem",
+            fontWeight: 600,
+            color: mode === "dark" ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.5)",
+            fontFamily: "'Quicksand', sans-serif",
+          }}>
+            Something went wrong. Please try again later.
+          </span>
+        </Box>
       ) : (
         <InfiniteScroll
           dataLength={displayedArticles.length}
           next={loadMoreArticles}
           hasMore={hasMore}
           loader={
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px", padding: "20px 40px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", padding: "12px 0" }}>
               {[1, 2].map((_, i) => (
-                <Skeleton key={i} animation="wave" variant="rounded" height={200} sx={{ borderRadius: "16px" }} />
+                <Skeleton key={i} animation="wave" variant="rounded" height={180} sx={{ borderRadius: "12px" }} />
               ))}
             </div>
           }
           endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
+            <Box sx={{
+              textAlign: "center",
+              py: 4,
+              color: mode === "dark" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.35)",
+              fontFamily: "'Quicksand', sans-serif",
+              fontWeight: 600,
+              fontSize: "0.95rem",
+              letterSpacing: "0.3px",
+            }}>
+              You're all caught up!
+            </Box>
           }
           style={{ overflow: "visible" }}
         >
-          <div style={{ marginTop: "50px", display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px", padding: "20px 40px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", padding: "12px 0" }}>
                   {displayedArticles.map(
                     (article, index) =>
                       article && (
                         <NewsCard
                           key={index}
                           title={article.title}
+                          someText={article.someText}
                           link={article.link}
                           time={article.time}
                           providerImg={article.providerImg}
-                        // providerName={article.providerName}
+                          providerName={article.providerName}
                         />
                       )
                   )}

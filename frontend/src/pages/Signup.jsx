@@ -1,582 +1,44 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { toast } from "react-hot-toast";
-// import axios from "axios";
-// import config from '../config'; // Adjust the import path as needed
-// import CryptoJS from 'crypto-js';
-// import PersonIcon from "@mui/icons-material/Person";
-// import VpnKeyRoundedIcon from "@mui/icons-material/VpnKeyRounded";
-// import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
-// import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-// import {
-//   InputAdornment,
-//   IconButton,
-//   Grid,
-//   Typography,
-//   Button,
-//   TextField,
-//   Avatar,
-//   CircularProgress,
-//   FormControl,
-//   Select,
-//   MenuItem,
-//   InputLabel
-// } from "@mui/material";
-// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-// import Visibility from "@mui/icons-material/Visibility";
-// import VisibilityOff from "@mui/icons-material/VisibilityOff";
-// import InfoIcon from "@mui/icons-material/Info";
-// import image1 from "../images/bg2.jpg";
-// import { POST } from "../api";
-// import { Modal } from "react-bootstrap";
-// import VerifyEmail from "../components/VerifyEmail.jsx";
-
-// export default function Register() {
-//   // axios.defaults.withCredentials = true;
-//   const [loading, setloading] = useState(false);
-//   const [justVerify, setJustVerify] = useState(false);
-//   const [validPassword, setValidPassword] = useState(false);
-
-//   const handlePasswordofLogin = (e) => {
-//     const input = e.target.value;
-//     setPassword(input);
-//     if (input.length < 8) {
-//       setValidPassword(false);
-//       return;
-//     } else {
-//       setValidPassword(true);
-//     }
-//   };
-//   const [username, setUsername] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [role, setRole] = useState("READER");
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [errorEmailId, setErrorEmailId] = useState(false);
-
-//   const [selectedFile, setSelectedFile] = useState(null);
-
-//   // Function to handle file selection
-//   const handleFileChange = (event) => {
-//     setSelectedFile(event.target.files[0]);
-//   };
-
-//   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-//   const handleMouseDownPassword = (event) => {
-//     event.preventDefault();
-//   };
-
-//   const navigate = useNavigate();
-//   // const { validateUser, isLoggedIn } = useAuth();
-
-
-
-
-//   const [showModal, setShowModal] = useState(false);
-//   const [modalResponse, setModalResponse] = useState(null);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setJustVerify(true);
-
-//     if (
-//       errorEmailId ||
-//       username === "" ||
-//       email === "" ||
-//       // !validPassword ||
-//       role === "" ||
-//       username.length >= 255 ||
-//       email.length >= 255 ||
-//       password.length >= 255
-//     ) {
-//       toast("Please fill out all fields correctly.", {
-//         icon: <InfoIcon />,
-//       });
-//       return;
-//     }
-
-//     const data = new FormData();
-//     data.append("username", username);
-//     data.append("email", email);
-//     data.append("role", role);
-//     data.append("certificate", selectedFile);
-
-
-//     try {
-//       const result = await POST(`/api/user/isuserexistwhensignup`, { email, role });
-//       console.log(result.data);
-
-//       if (!result.data?.success) {
-//         toast.error(result.data.error);
-//         return;
-//       }
-//     }
-//     catch (error) {
-//       toast.error("Signup failed");
-//       return;
-//     }
-
-
-//     setShowModal(true);
-
-//     // Wait for the modal's response
-//     const response = await new Promise((resolve) => {
-//       const interval = setInterval(() => {
-//         if (modalResponse !== null) {
-//           clearInterval(interval);
-//           resolve(modalResponse);
-//         }
-//       }, 100);
-//     });
-
-//     // If the response is not valid, return early
-//     if (!response) {
-//       toast.error("Invalid code");
-//       return;
-//     }
-
-
-//     setloading(true);
-//     const encryptedPassword = CryptoJS.AES.encrypt(password, config.PWD_SECRET).toString();
-//     data.append('password', encryptedPassword);
-
-
-//     try {
-//       const result = await axios.post(`${config.BACKEND_API}/api/user/signup`, data, {
-//         headers: {
-//           'Content-Type': 'multipart/form-data',
-//           "authorization": "Bearer " + localStorage.getItem("token")
-//         }
-//       });
-
-//       if (result.data?.success) {
-//         window.localStorage.setItem('token', result.data.token);
-//         toast.success("Signup successfully");
-//         navigate('/');
-//       }
-//       else {
-//         toast.error(result.data?.message);
-//       }
-//     } catch (error) {
-//       toast.error("Signup failed");
-//     } finally {
-//       setloading(false);
-//     }
-
-//   };
-
-
-
-//   return (
-//     <>
-//       <Grid
-//         container
-//         justifyContent="center"
-//         alignItems="center"
-//         sx={{
-//           backgroundImage: `url(${image1})`,
-//           backgroundSize: 'cover',
-//           backgroundPosition: 'center',
-//           backgroundRepeat: 'no-repeat',
-//           minHeight: '100vh',
-//           width: '100%',
-//           position: 'fixed',
-//           top: 0,
-//           left: 0,
-//         }}
-//       >
-//         <Grid
-//           item
-//           xs={12}
-//           sm={8}
-//           md={6}
-//           lg={4}
-//           xl={4}
-//           sx={{
-//             borderRadius: "16px",
-//             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-//             backdropFilter: "blur(16px)",
-//             backgroundColor: "transparent",
-//             padding: 1.2,
-//           }}
-//         >
-//           <Grid
-//             item
-//             margin={0}
-//             padding={2}
-//             container
-//             flexDirection="column"
-//             justifyContent="center"
-//             alignItems="center"
-//           >
-//             <Avatar sx={{ backgroundColor: "#25396F", mb: 1 }}>
-//               <LockOutlinedIcon />
-//             </Avatar>
-//             <Typography variant="h5" fontWeight="bold" sx={{
-//               fontFamily: "'Quicksand', 'Arial', sans-serif",
-//             }}>
-//               Create A New Account
-//             </Typography>
-//           </Grid>
-//           <Grid
-//             container
-//             component="form"
-//             onSubmit={handleSubmit}
-//             spacing={2}
-//             padding={2}
-//           >
-
-
-//             <Grid item xs={12}>
-//               <FormControl size="small" fullWidth>
-//                 <InputLabel id="role-label" color="success">
-//                   Role
-//                 </InputLabel>
-//                 <Select
-//                   color="success"
-//                   labelId="role-label"
-//                   id="role"
-//                   label="Role"
-//                   value={role}
-//                   onChange={(e) => { setRole(e.target.value); }}
-//                   sx={{
-//                     borderRadius: 25,
-//                     fontWeight: "bold",
-//                     "& .MuiSelect-select": {
-//                       fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the selected value
-//                     },
-//                     "& .MuiInputLabel-root": {
-//                       fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the label
-//                     },
-//                   }}
-//                   startAdornment={
-//                     <InputAdornment position="start">
-//                       <PeopleAltRoundedIcon color="success" />
-//                     </InputAdornment>
-//                   }
-//                 >
-
-//                   <MenuItem value="READER" sx={{
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif",
-
-//                   }}>READER</MenuItem>
-//                   <MenuItem value="PROVIDER" sx={{
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif",
-
-//                   }}>PROVIDER</MenuItem>
-//                 </Select>
-//               </FormControl>
-//             </Grid>
-
-
-//             <Grid item xs={12}>
-//               <TextField
-//                 value={username}
-//                 onChange={(e) => {
-//                   const value = e.target.value;
-//                   setUsername(value);
-//                 }}
-//                 id="username"
-//                 label="User Name"
-//                 placeholder="username"
-//                 variant="outlined"
-//                 fullWidth
-//                 required
-//                 size="small"
-//                 error={
-//                   justVerify &&
-//                   (username === "" || username.length >= 255)
-//                 }
-//                 helperText={
-//                   justVerify &&
-//                   (username === ""
-//                     ? "This field cannot be empty."
-//                     : "")
-//                 }
-//                 InputProps={{
-//                   startAdornment: (
-//                     <InputAdornment position="start">
-//                       <PersonIcon color="success" />
-//                     </InputAdornment>
-//                   ),
-//                   style: { fontFamily: "'Quicksand', 'Arial', sans-serif" }, // Use style for InputProps
-//                 }}
-//                 sx={{
-//                   "& .MuiOutlinedInput-root": {
-//                     borderRadius: 25,
-//                     fontWeight: "bold",
-//                   },
-//                   "& label": {
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to label
-//                   },
-//                   "& .MuiInputBase-input": {
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the input
-//                   },
-//                 }}
-//               />
-//             </Grid>
-//             <Grid item xs={12}>
-//               <TextField
-//                 value={email}
-//                 onChange={(e) => {
-//                   const value = e.target.value;
-//                   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//                   setEmail(value);
-//                   setErrorEmailId(!emailRegex.test(value));
-//                 }}
-//                 id="email"
-//                 label="Email Address"
-//                 placeholder="abc@gmail.com"
-//                 variant="outlined"
-//                 fullWidth
-//                 required
-//                 size="small"
-//                 error={
-//                   justVerify &&
-//                   (email === "" || email.length >= 255 || errorEmailId)
-//                 }
-//                 helperText={
-//                   justVerify &&
-//                   (email === ""
-//                     ? "This field cannot be empty."
-//                     : errorEmailId
-//                       ? "Please, enter valid email id"
-//                       : "")
-//                 }
-//                 InputProps={{
-//                   startAdornment: (
-//                     <InputAdornment position="start">
-//                       <EmailRoundedIcon color="success" />
-//                     </InputAdornment>
-//                   ),
-//                   style: { fontFamily: "'Quicksand', 'Arial', sans-serif" }, // Use style for InputProps
-//                 }}
-//                 sx={{
-//                   "& .MuiOutlinedInput-root": {
-//                     borderRadius: 25,
-//                     fontWeight: "bold",
-//                   },
-//                   "& label": {
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to label
-//                   },
-//                   "& .MuiInputBase-input": {
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the input
-//                   },
-//                 }}
-//               />
-//             </Grid>
-//             <Grid item xs={12}>
-//               <TextField
-//                 value={password}
-//                 onChange={handlePasswordofLogin}
-//                 id="password"
-//                 label="Password"
-//                 placeholder="e.g. 1A3a5$7"
-//                 variant="outlined"
-//                 name="password"
-//                 type={showPassword ? "text" : "password"}
-//                 fullWidth
-//                 required
-//                 size="small"
-//                 error={
-//                   justVerify &&
-//                   (!validPassword || password === "" || password.length >= 255)
-//                 }
-//                 helperText={
-//                   justVerify &&
-//                   (password === ""
-//                     ? "This field cannot be empty."
-//                     : !validPassword
-//                       ? "The password must contain at least 8 characters."
-//                       : "")
-//                 }
-//                 InputProps={{
-//                   startAdornment: (
-//                     <InputAdornment position="start">
-//                       <VpnKeyRoundedIcon color="success" />
-//                     </InputAdornment>
-//                   ),
-//                   endAdornment: (
-//                     <InputAdornment position="end">
-//                       <IconButton
-//                         aria-label="toggle password visibility"
-//                         onClick={handleClickShowPassword}
-//                         onMouseDown={handleMouseDownPassword}
-//                         edge="end"
-//                       >
-//                         {showPassword ? (
-//                           <Visibility color="success" />
-//                         ) : (
-//                           <VisibilityOff color="success" />
-//                         )}
-//                       </IconButton>
-//                     </InputAdornment>
-//                   ),
-//                 }}
-//                 sx={{
-//                   "& .MuiOutlinedInput-root": {
-//                     borderRadius: 25,
-//                     fontWeight: "bold",
-//                   },
-//                   "& label": {
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to label
-//                   },
-//                   "& .MuiInputBase-input": {
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the input
-//                   },
-//                 }}
-//               />
-//             </Grid>
-
-
-
-//             <Grid item xs={12}>
-//               {role === 'PROVIDER' && (
-//                 <>
-//                   <Typography variant="body2" align="left" sx={{
-//                     fontFamily: "'Quicksand', 'Arial', sans-serif",
-//                   }}>
-//                     Provide Certificate
-//                   </Typography>
-//                   <TextField
-//                     type="file"
-//                     fullWidth
-//                     required
-//                     onChange={handleFileChange}
-//                     sx={{
-//                       "& .MuiOutlinedInput-root": {
-//                         borderRadius: 3,
-//                         fontWeight: "bold",
-//                       },
-//                       "& label": {
-//                         fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to label
-//                       },
-//                       "& .MuiInputBase-input": {
-//                         fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the input
-//                       },
-//                     }}
-//                   />
-//                 </>
-//               )}
-//             </Grid>
-
-//             <Grid item xs={12}>
-//               <Button
-//                 fullWidth
-//                 type="submit"
-//                 variant="contained"
-//                 sx={{
-//                   position: "relative",
-//                   fontWeight: "bold",
-//                   borderRadius: "12px",
-//                   backgroundColor: "#02294F",
-//                   fontFamily: "'Quicksand', 'Arial', sans-serif",
-//                   color: "white",
-//                   "&:hover": {
-//                     color: "white",
-//                     backgroundColor: "#25396F",
-//                   },
-//                 }}
-//               >
-//                 {!loading ? "Sign Up" : "Signing Up"}
-//                 {loading && <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}
-//                 {loading && (
-//                   <CircularProgress
-//                     size={20}
-//                     sx={{
-//                       color: "white",
-//                       right: 0,
-//                     }}
-//                   />
-//                 )}
-//               </Button>
-//             </Grid>
-//             <Grid item xs={12}>
-//               <Button
-//                 color="success"
-//                 variant="text"
-//                 onClick={() => {
-//                   navigate("/login");
-//                 }}
-//                 sx={{
-//                   fontFamily: "'Quicksand', 'Arial', sans-serif",
-//                   fontWeight: "bold",
-//                   textDecoration: "underline",
-//                   display: "flex",
-//                   textAlign: "center",
-//                   alignItems: "center",
-//                   alignContent: "center",
-//                   width: '100%',
-
-//                 }}
-//               >
-//                 Already have an account? Log In
-//               </Button>
-
-//               <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-//                 <Modal.Header closeButton>
-//                   <Typography
-//                     variant="h5"
-//                     sx={{
-//                       fontWeight: 600, pt: -3
-//                     }}
-//                   >
-//                     Verify Email
-//                   </Typography>
-
-//                 </Modal.Header>
-//                 <Modal.Body>
-//                   <VerifyEmail setShowModal={setShowModal} setModalResponse={setModalResponse} email={email} username={username} />
-//                 </Modal.Body>
-//               </Modal>
-
-//             </Grid>
-//           </Grid>
-//         </Grid>
-//       </Grid>
-//     </>
-//   );
-// }
-
-
-
-
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import config from '../config'; // Adjust the import path as needed
+import config from '../config';
 import CryptoJS from 'crypto-js';
 import PersonIcon from "@mui/icons-material/Person";
 import VpnKeyRoundedIcon from "@mui/icons-material/VpnKeyRounded";
-import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import {
   InputAdornment,
   IconButton,
-  Grid,
+  Box,
   Typography,
   Button,
   TextField,
-  Avatar,
   CircularProgress,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InfoIcon from "@mui/icons-material/Info";
-import image1 from "../images/login_background.png";
 import { POST } from "../api";
 import { Modal } from "react-bootstrap";
 import VerifyEmail from "../components/VerifyEmail.jsx";
+import Logo from "../components/Logo";
+
+const inputSx = {
+  "& .MuiOutlinedInput-root": {
+    borderRadius: '14px',
+    fontWeight: 600,
+    fontFamily: "'Quicksand', sans-serif",
+    fontSize: '15px',
+    "& fieldset": { borderColor: "rgba(30,144,255,0.2)" },
+    "&:hover fieldset": { borderColor: "rgba(30,144,255,0.4)" },
+    "&.Mui-focused fieldset": { borderColor: "#1E90FF", borderWidth: "2px" },
+  },
+  "& label": { fontFamily: "'Quicksand', sans-serif", fontWeight: 500 },
+  "& .MuiInputBase-input": { fontFamily: "'Quicksand', sans-serif" },
+};
 
 export default function Register() {
-  // axios.defaults.withCredentials = true;
   const [loading, setloading] = useState(false);
   const [justVerify, setJustVerify] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
@@ -586,67 +48,45 @@ export default function Register() {
   const [hasSpecialChar, setHasSpecialChar] = useState(false);
   const [isValidLength, setIsValidLength] = useState(false);
 
-  const handlePasswordofLogin = (e) => {
+  const handlePasswordChange = (e) => {
     const input = e.target.value;
     setPassword(input);
 
-    // Check for password length
     const lengthValid = input.length >= 8;
     setIsValidLength(lengthValid);
-
-    // Check for uppercase letters
     const upperCaseValid = /[A-Z]/.test(input);
     setHasUpperCase(upperCaseValid);
-
-    // Check for lowercase letters
     const lowerCaseValid = /[a-z]/.test(input);
     setHasLowerCase(lowerCaseValid);
-
-    // Check for numbers
     const numberValid = /[0-9]/.test(input);
     setHasNumber(numberValid);
-
-    // Check for special characters
     const specialCharValid = /[!@#$%^&*(),.?":{}|<>]/.test(input);
     setHasSpecialChar(specialCharValid);
 
-    // Set validPassword to true only if all conditions are met
-    if (lengthValid && upperCaseValid && lowerCaseValid && numberValid && specialCharValid) {
-      setValidPassword(true);
-    } else {
-      setValidPassword(false);
-    }
+    setValidPassword(lengthValid && upperCaseValid && lowerCaseValid && numberValid && specialCharValid);
   };
-
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("READER");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorEmailId, setErrorEmailId] = useState(false);
 
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  // Function to handle file selection
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  const handleMouseDownPassword = (event) => event.preventDefault();
 
   const navigate = useNavigate();
-  // const { validateUser, isLoggedIn } = useAuth();
-
-
-
 
   const [showModal, setShowModal] = useState(false);
-  const [modalResponse, setModalResponse] = useState(null);
+  const modalResponseRef = useRef(null);
+
+  const handleModalResponse = (value) => {
+    modalResponseRef.current = value;
+  };
+
+  const passwordsMatch = password === confirmPassword;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -657,7 +97,8 @@ export default function Register() {
       username === "" ||
       email === "" ||
       !validPassword ||
-      role === "" ||
+      !passwordsMatch ||
+      confirmPassword === "" ||
       username.length >= 255 ||
       email.length >= 255 ||
       password.length >= 255
@@ -671,65 +112,53 @@ export default function Register() {
     const data = new FormData();
     data.append("username", username);
     data.append("email", email);
-    data.append("role", role);
-    data.append("certificate", selectedFile);
-
+    data.append("role", "READER");
 
     try {
-      const result = await POST(`/api/user/isuserexistwhensignup`, {username, email, role });
-      console.log(result.data);
-
-      if (result.data?.success===false) {
+      const result = await POST(`/api/user/isuserexistwhensignup`, { username, email, role: "READER" });
+      if (result.data?.success === false) {
         toast.error(result.data.message);
         return;
       }
-    }
-    catch (error) {
+    } catch (error) {
       toast.error("Signup failed");
       return;
     }
 
-
+    modalResponseRef.current = null;
     setShowModal(true);
 
-    // Wait for the modal's response
     const response = await new Promise((resolve) => {
       const interval = setInterval(() => {
-        if (modalResponse !== null) {
+        if (modalResponseRef.current !== null) {
           clearInterval(interval);
-          resolve(modalResponse);
+          resolve(modalResponseRef.current);
         }
       }, 100);
     });
 
-    // If the response is not valid, return early
     if (!response) {
       toast.error("Invalid code");
       return;
     }
 
-
     setloading(true);
     const encryptedPassword = CryptoJS.AES.encrypt(password, config.PWD_SECRET).toString();
     data.append('password', encryptedPassword);
-
 
     try {
       const result = await axios.post(`${config.BACKEND_API}/api/user/signup`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          "authorization": "Bearer " + localStorage.getItem("token")
-        }
+          "authorization": "Bearer " + localStorage.getItem("token"),
+        },
       });
 
       if (result.data?.success) {
         window.localStorage.setItem('token', result.data.token);
-        toast.success("Signup successfully");
-        // navigate('/');
+        toast.success("Signup successful!");
         window.location.href = '/';
-      }
-      else {
-        console.log("asdf");
+      } else {
         toast.error(result.data?.message);
       }
     } catch (error) {
@@ -737,388 +166,310 @@ export default function Register() {
     } finally {
       setloading(false);
     }
-
   };
 
-
+  const getPasswordHelperText = () => {
+    if (!justVerify) return "";
+    if (password === "") return "This field cannot be empty.";
+    if (!isValidLength) return "At least 8 characters required.";
+    if (!hasUpperCase) return "Must contain an uppercase letter.";
+    if (!hasLowerCase) return "Must contain a lowercase letter.";
+    if (!hasNumber) return "Must contain a number.";
+    if (!hasSpecialChar) return "Must contain a special character.";
+    return "";
+  };
 
   return (
-    <>
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
+    <Box
+      sx={{
+        minHeight: '100vh',
+        width: '100%',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'linear-gradient(135deg, #0a1628 0%, #0d2137 40%, #0f2b46 100%)',
+        zIndex: 10,
+        overflowY: 'auto',
+        py: 4,
+      }}
+    >
+      {/* Background decoration */}
+      <Box sx={{
+        position: 'absolute',
+        top: '5%',
+        left: '20%',
+        width: 300,
+        height: 300,
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(30,144,255,0.08) 0%, transparent 70%)',
+        filter: 'blur(40px)',
+      }} />
+      <Box sx={{
+        position: 'absolute',
+        bottom: '10%',
+        right: '15%',
+        width: 250,
+        height: 250,
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(30,144,255,0.06) 0%, transparent 70%)',
+        filter: 'blur(40px)',
+      }} />
+
+      <Box
         sx={{
-          backgroundImage: `url(${image1})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          minHeight: '100vh',
           width: '100%',
-          position: 'fixed',
-          top: 0,
-          left: 0,
+          maxWidth: 420,
+          mx: 2,
+          p: { xs: 3, sm: 4 },
+          borderRadius: '24px',
+          backgroundColor: 'rgba(255,255,255,0.97)',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          md={6}
-          lg={4}
-          xl={4}
-          sx={{
-            borderRadius: "16px",
-            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-            backdropFilter: "blur(16px)",
-            backgroundColor: "white",
-            padding: 1.2,
-          }}
-        >
-          <Grid
-            item
-            margin={0}
-            padding={2}
-            container
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Avatar sx={{ backgroundColor: "#25396F", mb: 1 }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography variant="h5" fontWeight="bold" sx={{
-              fontFamily: "'Quicksand', 'Arial', sans-serif",
-            }}>
-              Create A New Account
-            </Typography>
-          </Grid>
-          <Grid
-            container
-            component="form"
-            onSubmit={handleSubmit}
-            spacing={2}
-            padding={2}
-          >
+        <Box sx={{ mb: 2 }}>
+          <Logo height={48} />
+        </Box>
 
+        <Typography sx={{
+          fontFamily: "'Quicksand', sans-serif",
+          fontWeight: 800,
+          fontSize: '1.6rem',
+          color: '#1a1a2e',
+          mb: 0.5,
+        }}>
+          Create Account
+        </Typography>
 
-            <Grid item xs={12}>
-              <FormControl size="small" fullWidth>
-                <InputLabel id="role-label" color="success">
-                  Role
-                </InputLabel>
-                <Select
-                  color="success"
-                  labelId="role-label"
-                  id="role"
-                  label="Role"
-                  value={role}
-                  onChange={(e) => { setRole(e.target.value); }}
-                  sx={{
-                    borderRadius: 25,
-                    fontWeight: "bold",
-                    "& .MuiSelect-select": {
-                      fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the selected value
-                    },
-                    "& .MuiInputLabel-root": {
-                      fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the label
-                    },
-                  }}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <PeopleAltRoundedIcon color="success" />
-                    </InputAdornment>
-                  }
-                >
+        <Typography sx={{
+          fontFamily: "'Quicksand', sans-serif",
+          fontWeight: 500,
+          fontSize: '0.9rem',
+          color: 'rgba(0,0,0,0.45)',
+          mb: 3,
+        }}>
+          Join NewsBuzz and stay informed
+        </Typography>
 
-                  <MenuItem value="READER" sx={{
-                    fontFamily: "'Quicksand', 'Arial', sans-serif",
+        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              label="Username"
+              placeholder="johndoe"
+              variant="outlined"
+              fullWidth
+              required
+              size="small"
+              error={justVerify && (username === "" || username.length >= 255)}
+              helperText={justVerify && username === "" ? "This field cannot be empty." : ""}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon sx={{ color: '#1E90FF', fontSize: 20 }} />
+                  </InputAdornment>
+                ),
+              }}
+              sx={inputSx}
+            />
 
-                  }}>READER</MenuItem>
-                  <MenuItem value="PROVIDER" sx={{
-                    fontFamily: "'Quicksand', 'Arial', sans-serif",
+            <TextField
+              value={email}
+              onChange={(e) => {
+                const value = e.target.value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                setEmail(value);
+                setErrorEmailId(!emailRegex.test(value));
+              }}
+              label="Email Address"
+              placeholder="you@example.com"
+              variant="outlined"
+              fullWidth
+              required
+              size="small"
+              error={justVerify && (email === "" || email.length >= 255 || errorEmailId)}
+              helperText={
+                justVerify && (email === ""
+                  ? "This field cannot be empty."
+                  : errorEmailId ? "Please enter a valid email." : "")
+              }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailRoundedIcon sx={{ color: '#1E90FF', fontSize: 20 }} />
+                  </InputAdornment>
+                ),
+              }}
+              sx={inputSx}
+            />
 
-                  }}>PROVIDER</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+            <TextField
+              value={password}
+              onChange={handlePasswordChange}
+              label="Password"
+              placeholder="Min. 8 characters"
+              variant="outlined"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              fullWidth
+              required
+              size="small"
+              error={justVerify && (!validPassword || password === "" || password.length >= 255)}
+              helperText={getPasswordHelperText()}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <VpnKeyRoundedIcon sx={{ color: '#1E90FF', fontSize: 20 }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                      size="small"
+                    >
+                      {showPassword ? (
+                        <Visibility sx={{ color: '#1E90FF', fontSize: 20 }} />
+                      ) : (
+                        <VisibilityOff sx={{ color: 'rgba(0,0,0,0.3)', fontSize: 20 }} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              sx={inputSx}
+            />
 
+            <TextField
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              label="Confirm Password"
+              placeholder="Re-enter your password"
+              variant="outlined"
+              name="confirmPassword"
+              type={showConfirmPassword ? "text" : "password"}
+              fullWidth
+              required
+              size="small"
+              error={justVerify && (confirmPassword === "" || !passwordsMatch)}
+              helperText={
+                justVerify && (confirmPassword === ""
+                  ? "Please confirm your password."
+                  : !passwordsMatch ? "Passwords do not match." : "")
+              }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <VpnKeyRoundedIcon sx={{ color: '#1E90FF', fontSize: 20 }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle confirm password visibility"
+                      onClick={() => setShowConfirmPassword((show) => !show)}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                      size="small"
+                    >
+                      {showConfirmPassword ? (
+                        <Visibility sx={{ color: '#1E90FF', fontSize: 20 }} />
+                      ) : (
+                        <VisibilityOff sx={{ color: 'rgba(0,0,0,0.3)', fontSize: 20 }} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              sx={inputSx}
+            />
 
-            <Grid item xs={12}>
-              <TextField
-                value={username}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setUsername(value);
-                }}
-                id="username"
-                label="User Name"
-                placeholder="username"
-                variant="outlined"
-                fullWidth
-                required
-                size="small"
-                error={
-                  justVerify &&
-                  (username === "" || username.length >= 255)
-                }
-                helperText={
-                  justVerify &&
-                  (username === ""
-                    ? "This field cannot be empty."
-                    : "")
-                }
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonIcon color="success" />
-                    </InputAdornment>
-                  ),
-                  style: { fontFamily: "'Quicksand', 'Arial', sans-serif" }, // Use style for InputProps
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: 25,
-                    fontWeight: "bold",
-                  },
-                  "& label": {
-                    fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to label
-                  },
-                  "& .MuiInputBase-input": {
-                    fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the input
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                value={email}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                  setEmail(value);
-                  setErrorEmailId(!emailRegex.test(value));
-                }}
-                id="email"
-                label="Email Address"
-                placeholder="abc@gmail.com"
-                variant="outlined"
-                fullWidth
-                required
-                size="small"
-                error={
-                  justVerify &&
-                  (email === "" || email.length >= 255 || errorEmailId)
-                }
-                helperText={
-                  justVerify &&
-                  (email === ""
-                    ? "This field cannot be empty."
-                    : errorEmailId
-                      ? "Please, enter valid email id"
-                      : "")
-                }
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailRoundedIcon color="success" />
-                    </InputAdornment>
-                  ),
-                  style: { fontFamily: "'Quicksand', 'Arial', sans-serif" }, // Use style for InputProps
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: 25,
-                    fontWeight: "bold",
-                  },
-                  "& label": {
-                    fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to label
-                  },
-                  "& .MuiInputBase-input": {
-                    fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the input
-                  },
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                value={password}
-                onChange={handlePasswordofLogin}
-                id="password"
-                label="Password"
-                placeholder="e.g. 1A3a5$7"
-                variant="outlined"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                fullWidth
-                required
-                size="small"
-                error={
-                  justVerify &&
-                  (!validPassword || password === "" || password.length >= 255)
-                }
-                helperText={
-                  justVerify &&
-                  (password === ""
-                    ? "This field cannot be empty."
-                    : !isValidLength
-                      ? "Password must be at least 8 characters long."
-                      : !hasUpperCase
-                        ? "Password must contain at least one uppercase letter."
-                        : !hasLowerCase
-                          ? "Password must contain at least one lowercase letter."
-                          : !hasNumber
-                            ? "Password must contain at least one number."
-                            : !hasSpecialChar
-                              ? "Password must contain at least one special character."
-                              : "")
-
-
-                }
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <VpnKeyRoundedIcon color="success" />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <Visibility color="success" />
-                        ) : (
-                          <VisibilityOff color="success" />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: 25,
-                    fontWeight: "bold",
-                  },
-                  "& label": {
-                    fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to label
-                  },
-                  "& .MuiInputBase-input": {
-                    fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the input
-                  },
-                }}
-              />
-            </Grid>
-
-
-
-            <Grid item xs={12}>
-              {role === 'PROVIDER' && (
-                <>
-                  <Typography variant="body2" align="left" sx={{
-                    fontFamily: "'Quicksand', 'Arial', sans-serif",
-                  }}>
-                    Provide Certificate
-                  </Typography>
-                  <TextField
-                    type="file"
-                    fullWidth
-                    required
-                    onChange={handleFileChange}
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        borderRadius: 3,
-                        fontWeight: "bold",
-                      },
-                      "& label": {
-                        fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to label
-                      },
-                      "& .MuiInputBase-input": {
-                        fontFamily: "'Quicksand', 'Arial', sans-serif", // Apply font family to the input
-                      },
-                    }}
-                  />
-                </>
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              disabled={loading}
+              sx={{
+                fontFamily: "'Quicksand', sans-serif",
+                fontWeight: 700,
+                fontSize: '15px',
+                borderRadius: '14px',
+                py: 1.3,
+                mt: 0.5,
+                textTransform: 'none',
+                background: 'linear-gradient(135deg, #1E90FF 0%, #0055CC 100%)',
+                boxShadow: '0 4px 16px rgba(30,144,255,0.3)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #4DA8FF 0%, #1E90FF 100%)',
+                  boxShadow: '0 6px 24px rgba(30,144,255,0.4)',
+                  transform: 'translateY(-1px)',
+                },
+                '&:disabled': {
+                  background: 'rgba(30,144,255,0.5)',
+                  color: 'white',
+                },
+                transition: 'all 0.25s ease',
+              }}
+            >
+              {loading ? (
+                <CircularProgress size={22} sx={{ color: "white" }} />
+              ) : (
+                "Create Account"
               )}
-            </Grid>
+            </Button>
 
-            <Grid item xs={12}>
+            <Box sx={{ textAlign: 'center', mt: 1 }}>
+              <Typography component="span" sx={{
+                fontFamily: "'Quicksand', sans-serif",
+                fontWeight: 500,
+                fontSize: '0.88rem',
+                color: 'rgba(0,0,0,0.45)',
+              }}>
+                Already have an account?{' '}
+              </Typography>
               <Button
-                fullWidth
-                type="submit"
-                variant="contained"
+                variant="text"
+                onClick={() => navigate("/login")}
                 sx={{
-                  position: "relative",
-                  fontWeight: "bold",
-                  borderRadius: "12px",
-                  backgroundColor: "#02294F",
-                  fontFamily: "'Quicksand', 'Arial', sans-serif",
-                  color: "white",
-                  "&:hover": {
-                    color: "white",
-                    backgroundColor: "#25396F",
+                  fontFamily: "'Quicksand', sans-serif",
+                  fontWeight: 700,
+                  fontSize: '0.88rem',
+                  color: '#1E90FF',
+                  textTransform: 'none',
+                  p: 0,
+                  minWidth: 'auto',
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                    color: '#0055CC',
                   },
                 }}
               >
-                {!loading ? "Sign Up" : "Signing Up"}
-                {loading && <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>}
-                {loading && (
-                  <CircularProgress
-                    size={20}
-                    sx={{
-                      color: "white",
-                      right: 0,
-                    }}
-                  />
-                )}
+                Log In
               </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                color="success"
-                variant="text"
-                onClick={() => {
-                  navigate("/login");
-                }}
-                sx={{
-                  fontFamily: "'Quicksand', 'Arial', sans-serif",
-                  fontWeight: "bold",
-                  textDecoration: "underline",
-                  display: "flex",
-                  textAlign: "center",
-                  alignItems: "center",
-                  alignContent: "center",
-                  width: '100%',
+            </Box>
+          </Box>
+        </form>
+      </Box>
 
-                }}
-              >
-                Already have an account? Log In
-              </Button>
-
-              <Modal show={showModal} onHide={() => setShowModal(false)} centered>
-                <Modal.Header closeButton>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      fontWeight: 600, pt: -3
-                    }}
-                  >
-                    Verify Email
-                  </Typography>
-
-                </Modal.Header>
-                <Modal.Body>
-                  <VerifyEmail setShowModal={setShowModal} setModalResponse={setModalResponse} email={email} username={username} mode={"signup"} />
-                </Modal.Body>
-              </Modal>
-
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-    </>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Typography variant="h5" sx={{ fontWeight: 600 }}>
+            Verify Email
+          </Typography>
+        </Modal.Header>
+        <Modal.Body>
+          <VerifyEmail setShowModal={setShowModal} setModalResponse={handleModalResponse} email={email} username={username} mode={"signup"} />
+        </Modal.Body>
+      </Modal>
+    </Box>
   );
 }

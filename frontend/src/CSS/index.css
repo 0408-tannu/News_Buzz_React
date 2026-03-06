@@ -20,7 +20,7 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -28,12 +28,18 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(128, 128, 128, 0.4);
-  border-radius: 4px;
+  background: rgba(128, 128, 128, 0.25);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(128, 128, 128, 0.6);
+  background: rgba(128, 128, 128, 0.45);
+}
+
+/* Selection color */
+::selection {
+  background: rgba(30, 144, 255, 0.2);
+  color: inherit;
 }
 
 input:-webkit-autofill {

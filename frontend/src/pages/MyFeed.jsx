@@ -225,9 +225,8 @@ import Skeleton from '@mui/material/Skeleton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import TextField from '@mui/material/TextField';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ThemeContext } from '../context/ThemeContext';
-import { Stack } from 'react-bootstrap';
  import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import config from '../config';
@@ -351,13 +350,13 @@ const MyFeed = () => {
 
   return (
     <>
-      <div style={{ marginTop: "130px" }}>
+      <div style={{ overflow: "visible" }}>
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            padding: "10px",
+            padding: "8px 0",
             borderRadius: "25px",
             transition: "width 0.25s ease-in-out",
           }}
@@ -420,7 +419,7 @@ const MyFeed = () => {
           />
         </Box>
 
-        <div style={{ marginTop: "50px", display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px", padding: "20px 40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", padding: "12px 0" }}>
                 {filteredArticles.map((article, index) => (
                   <FeedNewsCard
                     key={index}
@@ -436,27 +435,34 @@ const MyFeed = () => {
         </div>
 
         {isLoading && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px", padding: "20px 40px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "16px", padding: "12px 0" }}>
             {[1, 2, 3, 4, 5, 6].map((_, index) => (
               <Skeleton
                 key={index}
                 animation="wave"
                 variant="rounded"
-                height={200}
-                sx={{ borderRadius: "16px" }}
+                height={180}
+                sx={{ borderRadius: "12px" }}
               />
             ))}
           </div>
         )}
 
         {isError && (
-          <div
-            className="alert alert-warning"
-            role="alert"
-            style={{ width: "50%", margin: "0 auto", zIndex: -1 }}
-          >
-            Error fetching articles.
-          </div>
+          <Box sx={{
+            display: "flex",
+            justifyContent: "center",
+            py: 6,
+          }}>
+            <Typography sx={{
+              fontSize: "1rem",
+              fontWeight: 600,
+              color: mode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
+              fontFamily: "'Quicksand', sans-serif",
+            }}>
+              Something went wrong. Please try again later.
+            </Typography>
+          </Box>
         )}
 
         {/* Observer target for infinite scrolling */}

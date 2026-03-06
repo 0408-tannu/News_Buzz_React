@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate, useLocation } from "react-router-dom";
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
@@ -74,15 +73,21 @@ const SidebarNavigation = ({ open, setOpen }) => {
             top: 10,
             left: 10,
             zIndex: 1300,
-            backgroundColor: mode === "dark" ? "#333" : "#fff",
-            color: mode === "dark" ? "#fff" : "#333",
+            width: 40,
+            height: 40,
+            backgroundColor: mode === "dark" ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)",
+            color: mode === "dark" ? "#90CAF9" : "#1E90FF",
+            border: `1px solid ${mode === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)"}`,
+            backdropFilter: "blur(8px)",
             "&:hover": {
-              backgroundColor: mode === "dark" ? "#555" : "#eee",
+              backgroundColor: mode === "dark" ? "rgba(30,144,255,0.15)" : "rgba(30,144,255,0.08)",
+              borderColor: "#1E90FF",
+              transform: "scale(1.05)",
             },
-            transition: "background-color 0.3s ease",
+            transition: "all 0.25s ease",
           }}
         >
-          <MenuIcon />
+          <MenuIcon sx={{ fontSize: 22 }} />
         </IconButton>
       </Toolbar>
 

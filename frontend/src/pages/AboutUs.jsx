@@ -48,7 +48,7 @@ const AboutUs = () => {
   ];
 
   return (
-    <div style={{ marginTop: '130px', padding: '20px 40px', maxWidth: '1100px', margin: '130px auto 60px' }}>
+    <div style={{ padding: '0', maxWidth: '1100px', margin: '0 auto 60px' }}>
       {/* Hero Section */}
       <Box sx={{ textAlign: 'center', mb: 6 }}>
         <Typography

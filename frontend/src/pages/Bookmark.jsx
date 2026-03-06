@@ -217,11 +217,11 @@ import React, { useEffect, useState, useContext } from 'react';
 import BookmarkCard from '../components/BookmarkCard';
 import { GET } from '../api.js';
 import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { ThemeContext } from '../context/ThemeContext';
 import { useQuery } from '@tanstack/react-query';
 import { gsap } from 'gsap';
@@ -311,13 +311,13 @@ const Bookmark = () => {
 
   return (
 
-    <div style={{ overflow: 'visible', marginTop: "130px" }}>  {/* This ensures the content isn't constrained */}
+    <div style={{ overflow: 'visible' }}>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '10px',
+          padding: '8px 0',
           borderRadius: '25px',
           transition: 'width 0.25s ease-in-out',
         }}
@@ -381,51 +381,78 @@ const Bookmark = () => {
       </Box>
 
       {isLoading ? (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Stack spacing={2} sx={{ display: "flex", justifyContent: "center" }}>
-            {[1, 2, 3, 4, 5, 6, 7].map((item, index) => (
-              <Skeleton animation="wave" key={index} variant="rounded" width={800} height={140} />
-            ))}
-          </Stack>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+          gap: "16px",
+          padding: "12px 0",
+        }}>
+          {[1, 2, 3, 4, 5, 6].map((_, index) => (
+            <Skeleton animation="wave" key={index} variant="rounded" height={160} sx={{ borderRadius: '12px' }} />
+          ))}
         </div>
       ) : isError ? (
-
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <span>Error fetching articles.</span>
-        </div>
+        <Box sx={{ display: "flex", justifyContent: "center", py: 6 }}>
+          <Typography sx={{
+            fontSize: "1rem",
+            fontWeight: 600,
+            color: mode === 'dark' ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
+            fontFamily: "'Quicksand', sans-serif",
+          }}>
+            Something went wrong. Please try again later.
+          </Typography>
+        </Box>
       ) : (
         <InfiniteScroll
           dataLength={displayedArticles.length}
           next={loadMoreArticles}
           hasMore={hasMore}
           loader={
-            <div style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
-              <Skeleton animation="wave" variant="rounded" width={800} height={140} />
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+              gap: "16px",
+              padding: "12px 0",
+            }}>
+              {[1, 2].map((_, i) => (
+                <Skeleton key={i} animation="wave" variant="rounded" height={160} sx={{ borderRadius: '12px' }} />
+              ))}
             </div>
           }
           endMessage={
             displayedArticles.length === 0 ? (
-              <p style={{ textAlign: 'center' }}>
-                <b>No bookmarks added</b>
-              </p>
+              <Box sx={{ display: "flex", justifyContent: "center", py: 6 }}>
+                <Typography sx={{
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  color: mode === 'dark' ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
+                  fontFamily: "'Quicksand', sans-serif",
+                }}>
+                  No bookmarks added yet
+                </Typography>
+              </Box>
             ) : null
           }
-
-          style={{ overflow: 'visible', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', padding: '0 20px' }}
+          style={{ overflow: 'visible' }}
         >
-          {displayedArticles.map((article, index) => (
-            article && (
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+            gap: "16px",
+            padding: "8px 0",
+          }}>
+            {displayedArticles.map((article, index) => (
+              article && (
                 <BookmarkCard
                   key={index}
                   title={article.title}
                   link={article.link}
-                  // time={article.time}
                   providerImg={article.providerImg}
                   providerName={article.providerName}
-
                 />
-            )
-          ))}
+              )
+            ))}
+          </div>
         </InfiniteScroll>
       )}
     </div>

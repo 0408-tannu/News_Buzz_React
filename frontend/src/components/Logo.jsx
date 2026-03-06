@@ -2,7 +2,7 @@ import React from 'react';
 
 const Logo = ({ height = 44 }) => {
   const iconSize = height;
-  const fontSize = height * 0.45;
+  const fontSize = height * 0.48;
   const id = React.useId().replace(/:/g, '');
 
   return (
@@ -10,61 +10,52 @@ const Logo = ({ height = 44 }) => {
       <svg
         width={iconSize}
         height={iconSize}
-        viewBox="0 0 48 48"
+        viewBox="0 0 52 52"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ display: 'block', filter: 'drop-shadow(0 2px 6px rgba(30,144,255,0.3))' }}
+        style={{ display: 'block', filter: 'drop-shadow(0 2px 8px rgba(30,144,255,0.25))' }}
       >
         <defs>
           <linearGradient id={`${id}-bg`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0EA5E9" />
-            <stop offset="50%" stopColor="#1E90FF" />
-            <stop offset="100%" stopColor="#6366F1" />
+            <stop offset="0%" stopColor="#1E90FF" />
+            <stop offset="100%" stopColor="#0055CC" />
           </linearGradient>
-          <linearGradient id={`${id}-shine`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.25)" />
-            <stop offset="50%" stopColor="rgba(255,255,255,0)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0.1)" />
+          <linearGradient id={`${id}-shine`} x1="0%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.2)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
           </linearGradient>
-          <linearGradient id={`${id}-bolt`} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FBBF24" />
-            <stop offset="100%" stopColor="#F59E0B" />
+          <linearGradient id={`${id}-bolt`} x1="50%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stopColor="#FFD700" />
+            <stop offset="100%" stopColor="#FFA500" />
           </linearGradient>
-          <filter id={`${id}-glow`}>
-            <feGaussianBlur stdDeviation="1" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
         </defs>
-        
-        {/* Background shape - squircle */}
-        <rect x="2" y="2" width="44" height="44" rx="14" fill={`url(#${id}-bg)`} />
-        
-        {/* Shine overlay */}
-        <rect x="2" y="2" width="44" height="44" rx="14" fill={`url(#${id}-shine)`} />
-        
-        {/* Newspaper fold lines */}
-        <path d="M12 14 H28" stroke="rgba(255,255,255,0.9)" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M12 20 H25" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M12 25 H22" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M12 30 H20" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" strokeLinecap="round" />
-        
-        {/* Lightning bolt - "Buzz" */}
+
+        {/* Background - rounded square */}
+        <rect x="2" y="2" width="48" height="48" rx="15" fill={`url(#${id}-bg)`} />
+
+        {/* Shine overlay for depth */}
+        <rect x="2" y="2" width="48" height="48" rx="15" fill={`url(#${id}-shine)`} />
+
+        {/* "N" letterform - bold, geometric */}
         <path
-          d="M30 12 L26 23 H31 L27 36"
+          d="M14 36V16H18.5L28 29V16H32V36H27.5L18.5 23.5V36H14Z"
+          fill="white"
+          opacity="0.95"
+        />
+
+        {/* Lightning bolt accent - represents "Buzz" / speed */}
+        <path
+          d="M34 14L30 24H35L31 34"
           stroke={`url(#${id}-bolt)`}
-          strokeWidth="3"
+          strokeWidth="2.8"
           strokeLinecap="round"
           strokeLinejoin="round"
           fill="none"
-          filter={`url(#${id}-glow)`}
         />
-        
-        {/* Notification dot */}
-        <circle cx="38" cy="10" r="4" fill="#FF4757" stroke="rgba(0,0,0,0.1)" strokeWidth="0.5" />
-        <circle cx="38" cy="10" r="1.5" fill="rgba(255,255,255,0.6)" />
+
+        {/* Live indicator dot */}
+        <circle cx="42" cy="12" r="4" fill="#FF3B30" />
+        <circle cx="42" cy="12" r="1.8" fill="rgba(255,255,255,0.5)" />
       </svg>
 
       <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
@@ -73,13 +64,13 @@ const Logo = ({ height = 44 }) => {
           fontWeight: 800,
           fontSize: `${fontSize}px`,
           letterSpacing: '-0.5px',
-          background: 'linear-gradient(135deg, #0EA5E9 0%, #1E90FF 40%, #6366F1 100%)',
+          background: 'linear-gradient(135deg, #1E90FF 0%, #0055CC 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           userSelect: 'none',
         }}>
           News<span style={{
-            background: 'linear-gradient(135deg, #FBBF24, #F59E0B)',
+            background: 'linear-gradient(135deg, #FFD700, #FFA500)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }}>Buzz</span>

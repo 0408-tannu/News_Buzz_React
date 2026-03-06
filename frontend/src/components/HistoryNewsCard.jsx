@@ -317,138 +317,119 @@ const HistoryNewsCard = (props) => {
 
 
   return (
-    <>
-      <Box
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "stretch",
+        width: "100%",
+        position: "relative",
+        "&:hover .action-buttons": {
+          opacity: 1,
+          visibility: "visible",
+        },
+      }}
+    >
+      <Card
         sx={{
           display: "flex",
-          alignItems: "stretch",
-          justifyContent: "center",
-          width: { xs: "100%", sm: "48%", md: "380px" },
-          maxWidth: 420,
-          margin: "10px",
-          position: "relative",
-          "&:hover .action-buttons": {
-            opacity: 1,
-            visibility: "visible",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          borderRadius: "14px",
+          border: mode === "light" ? "1px solid rgba(0,0,0,0.06)" : "1px solid rgba(255,255,255,0.06)",
+          boxShadow: mode === "light"
+            ? "0 2px 10px rgba(0,0,0,0.05)"
+            : "0 2px 10px rgba(0,0,0,0.25)",
+          width: "100%",
+          backgroundColor: mode === "light" ? "#fff" : "rgb(40, 40, 40)",
+          transition: "all 0.25s ease",
+          "&:hover": {
+            boxShadow: mode === "light"
+              ? "0 4px 20px rgba(0,0,0,0.08)"
+              : "0 4px 20px rgba(0,0,0,0.4)",
+            transform: "translateY(-2px)",
           },
-          height: "auto",
         }}
       >
-        <Card
+        <CardContent sx={{ pb: '8px !important', pt: 2, px: 2 }}>
+          <Tooltip
+            title="Open article"
+            placement="top"
+            TransitionComponent={Zoom}
+            arrow
+          >
+            <Typography
+              variant="h6"
+              component="div"
+              onClick={handleClick}
+              sx={{
+                cursor: "pointer",
+                color: mode === "light" ? "#1a1a2e" : "rgba(255,255,255,0.92)",
+                fontWeight: 700,
+                fontSize: "0.95rem",
+                lineHeight: 1.45,
+                mb: 0.5,
+                transition: "color 0.2s ease",
+                "&:hover": { color: "#1E90FF" },
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
+              {props.title}
+            </Typography>
+          </Tooltip>
+        </CardContent>
+
+        <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            border: "none",
-            boxShadow: "none",
-            width: "100%",
-            height: "auto",
-            minHeight: "150px",
-            backgroundColor:
-              mode === "light" ? "rgb(246, 246, 246)" : "rgb(50, 50, 50)",
-            "&:hover": {
-              backgroundColor:
-                mode === "light" ? "rgb(240, 240, 240)" : "rgb(60, 60, 60)",
-            },
+            justifyContent: "space-between",
+            alignItems: "center",
+            px: 2,
+            pb: 1.5,
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <CardContent sx={{ flex: 1 }}>
-
-
-              {/* Title with Tooltip */}
-              <Tooltip
-                title="click"
-                placement="top"
-                TransitionComponent={Zoom}
-                arrow
-              >
-                <Typography
-                  variant="h6"
-                  component="div"
-                  gutterBottom
-                  onClick={handleClick}
-                  sx={{
-                    cursor: "pointer",
-                    color: "rgb(30, 144, 255)",
-                    "&:hover": { color: mode === "light" ? "blue" : "white" },
-                  }}
-                >
-                  {props.title}
-                </Typography>
-              </Tooltip>
-
-              {/* Some Text */}
-              {props.someText && (
-                <Typography variant="body2" color="text.secondary">
-                  {props.someText}
-                </Typography>
-              )}
-            </CardContent>
-
-
-          </Box>
-
-          {/* Time Display */}
-          <Box
+          <Typography
+            variant="caption"
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              color: mode === "light" ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.4)",
+              fontSize: "0.82rem",
+              fontWeight: 500,
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-start",
-                pl: 2,
-                mt: -1,
-              }}
-            >
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                fontSize="medium"
+            {formatDate(props.time)}
+          </Typography>
+
+          <Box
+            className="action-buttons"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              opacity: 0,
+              transition: "opacity 0.2s ease",
+              visibility: "hidden",
+            }}
+          >
+            <Tooltip title="Remove from history" placement="bottom" arrow>
+              <IconButton
+                size="small"
+                aria-label="delete"
+                onClick={handleDeleteClick}
+                sx={{
+                  color: mode === "dark" ? "#ff6b6b" : "#d32f2f",
+                  '&:hover': {
+                    backgroundColor: mode === "dark" ? "rgba(255,107,107,0.1)" : "rgba(211,47,47,0.06)",
+                  },
+                }}
               >
-                {formatDate(props.time)}
-              </Typography>
-            </Box>
-
-
-
-            <Box
-              className="action-buttons"
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                opacity: 0,
-                transition: "opacity 0.2s ease",
-                visibility: "hidden",
-              }}
-            >
-              <Tooltip title="Remove from history" placement="bottom" arrow>
-                <IconButton
-                  sx={{
-                    height: "48px",
-                    width: "48px",
-                    alignSelf: "center",
-                    marginBottom: "8px",
-                  }}
-                  aria-label="delete"
-                  onClick={handleDeleteClick}
-                >
-                  <AutoDeleteRoundedIcon />
-                </IconButton>
-              </Tooltip>
-            </Box>
-
-
-
-
+                <AutoDeleteRoundedIcon sx={{ fontSize: 20 }} />
+              </IconButton>
+            </Tooltip>
           </Box>
-        </Card>
-      </Box>
-    </>
+        </Box>
+      </Card>
+    </Box>
   );
 };
 

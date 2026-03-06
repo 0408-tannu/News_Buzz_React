@@ -297,7 +297,7 @@
 // export default VerifyEmail;
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Card,
   Button,
@@ -317,33 +317,42 @@ const StyledCard = styled(Card)(({ theme }) => ({
   width: '100%',
   maxWidth: '440px',
   margin: '0 auto',
-  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-  borderRadius: '12px'
+  boxShadow: 'none',
+  borderRadius: '0',
+  background: 'transparent',
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
   width: '100%',
   padding: '12px',
-  borderRadius: '8px',
+  borderRadius: '14px',
   textTransform: 'none',
-  fontSize: '18px',
-  backgroundColor: '#3b82f6',
+  fontSize: '15px',
+  fontFamily: "'Quicksand', sans-serif",
+  fontWeight: 700,
+  background: 'linear-gradient(135deg, #1E90FF 0%, #0055CC 100%)',
+  boxShadow: '0 4px 16px rgba(30,144,255,0.3)',
   '&:hover': {
-    backgroundColor: '#2563eb',
+    background: 'linear-gradient(135deg, #4DA8FF 0%, #1E90FF 100%)',
+    boxShadow: '0 6px 24px rgba(30,144,255,0.4)',
   }
 }));
 
 const StyledCodeInput = styled(InputBase)(({ theme }) => ({
-  width: '48px',
-  height: '48px',
+  width: '52px',
+  height: '52px',
   textAlign: 'center',
   fontSize: '22px',
-  backgroundColor: '#f8fafc',
-  borderRadius: '8px',
-  border: '1px solid #e2e8f0',
-  '&:focus': {
-    border: '2px solid #3b82f6',
+  fontWeight: 700,
+  fontFamily: "'Quicksand', sans-serif",
+  backgroundColor: 'rgba(30,144,255,0.04)',
+  borderRadius: '14px',
+  border: '2px solid rgba(30,144,255,0.15)',
+  transition: 'all 0.2s ease',
+  '&:focus-within': {
+    border: '2px solid #1E90FF',
     backgroundColor: '#fff',
+    boxShadow: '0 0 0 3px rgba(30,144,255,0.1)',
   },
   input: {
     textAlign: 'center',
@@ -353,14 +362,17 @@ const StyledCodeInput = styled(InputBase)(({ theme }) => ({
 const StyledInput = styled(InputBase)(({ theme }) => ({
   width: '100%',
   padding: '12px 16px',
-  backgroundColor: '#f8fafc',
-  borderRadius: '8px',
-  border: '1px solid #e2e8f0',
+  fontFamily: "'Quicksand', sans-serif",
+  fontWeight: 600,
+  backgroundColor: 'rgba(30,144,255,0.04)',
+  borderRadius: '14px',
+  border: '2px solid rgba(30,144,255,0.15)',
   marginBottom: '12px',
-  transition: 'all 0.2s',
+  transition: 'all 0.2s ease',
   '&:focus-within': {
-    border: '2px solid #3b82f6',
+    border: '2px solid #1E90FF',
     backgroundColor: '#fff',
+    boxShadow: '0 0 0 3px rgba(30,144,255,0.1)',
   }
 }));
 
@@ -370,15 +382,18 @@ const VerifyEmail = (props) => {
   const [BackendCode, setBackendCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  // eslint-disable-next-line 
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const emailSentRef = useRef(false);
 
 
   useEffect(() => {
-    const handleEmailSubmit = async (e) => {
-      // e.preventDefault();
-      setLoading(true); // Start loading
+    if (emailSentRef.current) return;
+    emailSentRef.current = true;
+
+    const handleEmailSubmit = async () => {
+      setLoading(true);
 
       try {
         const result = await POST('/api/sendemail/forgotpassword', { username: props.username, email: props.email, CheckUserExist: false });
@@ -387,16 +402,14 @@ const VerifyEmail = (props) => {
           setBackendCode(result.data.code);
           setCurrentStep(2);
         } else if (result.data?.caught) {
-          // toast.error(result.data?.message);
           navigate("/login");
-
         } else {
           toast.error(result.data?.message);
         }
       } catch (error) {
         toast.error('Something went wrong.');
       } finally {
-        setLoading(false); // Stop loading once the API call is complete
+        setLoading(false);
       }
     };
 
@@ -405,9 +418,8 @@ const VerifyEmail = (props) => {
   }, [props.email, props.username, navigate]);
 
   const handleCodeSubmit = async (e) => {
+    e.preventDefault();
 
-
-    console.log(BackendCode, Code.join(''));
     if (BackendCode !== Code.join('')) {
       toast.error('Invalid verification code');
       return;
@@ -497,10 +509,10 @@ const VerifyEmail = (props) => {
           <Box sx={{ p: 3 }}>
             <Box sx={{ mb: 3 }}>
 
-              <Typography variant="h5" sx={{ mb: 1, fontWeight: 600 }}>
+              <Typography sx={{ mb: 1, fontWeight: 700, fontSize: '1.3rem', fontFamily: "'Quicksand', sans-serif", color: '#1a1a2e' }}>
                 Check your email
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography sx={{ fontSize: '0.88rem', fontWeight: 500, fontFamily: "'Quicksand', sans-serif", color: 'rgba(0,0,0,0.5)' }}>
                 We sent a code to {props.email}
               </Typography>
             </Box>
@@ -548,10 +560,10 @@ const VerifyEmail = (props) => {
                 }}
                 onClick={() => setCurrentStep(currentStep - 1)}
               />
-              <Typography variant="h5" sx={{ mb: 1, fontWeight: 600 }}>
+              <Typography sx={{ mb: 1, fontWeight: 700, fontSize: '1.3rem', fontFamily: "'Quicksand', sans-serif", color: '#1a1a2e' }}>
                 Set a new password
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography sx={{ fontSize: '0.88rem', fontWeight: 500, fontFamily: "'Quicksand', sans-serif", color: 'rgba(0,0,0,0.5)' }}>
                 Please enter your new password
               </Typography>
             </Box>

@@ -1242,11 +1242,9 @@ const BookmarkCard = (props) => {
       sx={{
         display: 'flex',
         alignItems: 'stretch',
-        justifyContent: 'center',
-        width: { xs: '100%', sm: '48%', md: '380px' },
-        maxWidth: 420,
+        width: '100%',
         height: isRemoving ? '0' : 'auto',
-        margin: isRemoving ? '0' : '10px',
+        margin: isRemoving ? '0' : undefined,
         position: 'relative',
         opacity: isRemoving ? 0 : 1,
         transform: isRemoving ? 'translateX(-100%)' : 'translateX(0)',
@@ -1349,13 +1347,20 @@ const BookmarkCard = (props) => {
                 <Typography
                   variant="h6"
                   component="div"
-                  gutterBottom
                   onClick={handleClick}
                   sx={{
                     cursor: 'pointer',
-                    color: 'rgb(30, 144, 255)',
-                    '&:hover': { color: mode === 'light' ? 'blue' : 'white' },
-                    transition: 'color 0.3s ease',
+                    color: mode === 'light' ? '#1a1a2e' : 'rgba(255,255,255,0.92)',
+                    fontWeight: 700,
+                    fontSize: '0.95rem',
+                    lineHeight: 1.45,
+                    mb: 0.5,
+                    transition: 'color 0.2s ease',
+                    '&:hover': { color: '#1E90FF' },
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
                   }}
                 >
                   {props.title}
@@ -1393,58 +1398,57 @@ const BookmarkCard = (props) => {
               className="action-buttons"
               sx={{
                 display: 'flex',
-                justifyContent: 'flex-end',
                 alignItems: 'center',
+                gap: '2px',
                 opacity: 0,
                 visibility: 'hidden',
-                transition: 'opacity 0.2s ease-in-out, visibility 0.2s ease-in-out',
+                transition: 'opacity 0.2s ease',
+                pr: 1,
               }}
             >
               <Tooltip title="Remove Bookmark" placement="bottom" arrow>
                 <IconButton
-                  sx={{
-                    height: '48px',
-                    width: '48px',
-                    alignSelf: 'center',
-                    marginBottom: '8px',
-                  }}
+                  size="small"
                   aria-label="remove-bookmark"
                   onClick={handleBookmarkClick}
+                  sx={{
+                    color: "#1E90FF",
+                    '&:hover': { color: "#0055CC", backgroundColor: "rgba(30,144,255,0.08)" },
+                  }}
                 >
-                  <BookmarkIcon sx={{ fontSize: '28px', color: 'primary.main' }} />
+                  <BookmarkIcon sx={{ fontSize: 20 }} />
                 </IconButton>
               </Tooltip>
 
               <Tooltip title="Like" placement="bottom" arrow>
                 <IconButton
-                  sx={{
-                    height: '48px',
-                    width: '48px',
-                    alignSelf: 'center',
-                    marginBottom: '8px',
-                  }}
+                  size="small"
                   aria-label="like"
                   onClick={handleLikeClick}
+                  sx={{
+                    color: liked ? "#FF3B5C" : (mode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)"),
+                    '&:hover': { color: "#FF3B5C", backgroundColor: "rgba(255,59,92,0.08)" },
+                  }}
                 >
                   {liked ? (
-                    <HeartIcon sx={{ fontSize: '28px', color: 'red' }} />
+                    <HeartIcon sx={{ fontSize: 20 }} />
                   ) : (
-                    <HeartBorderIcon sx={{ fontSize: '28px' }} />
+                    <HeartBorderIcon sx={{ fontSize: 20 }} />
                   )}
                 </IconButton>
               </Tooltip>
 
               <Tooltip title="Share" placement="bottom" arrow>
                 <IconButton
-                  sx={{
-                    height: '48px',
-                    width: '48px',
-                    alignSelf: 'center',
-                  }}
+                  size="small"
                   aria-label="share"
                   onClick={() => setShowShareDialog(true)}
+                  sx={{
+                    color: mode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
+                    '&:hover': { color: "#1E90FF", backgroundColor: "rgba(30,144,255,0.08)" },
+                  }}
                 >
-                  <ShareButton sx={{ fontSize: '28px' }} />
+                  <ShareButton sx={{ fontSize: 18 }} />
                 </IconButton>
               </Tooltip>
             </Box>

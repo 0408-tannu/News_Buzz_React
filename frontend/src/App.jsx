@@ -114,7 +114,7 @@ function App() {
           sx={{
             position: 'fixed',
             top: 0,
-            left: window.localStorage.getItem('token') && role !== "PROVIDER" ? `${open ? '220px' : '64px'}` : 0token') && role !== "PROVIDER" ? `${open ? '220px' : '64px'}` : 0,
+            left: window.localStorage.getItem('token') && role !== "PROVIDER" ? `${open ? '220px' : '64px'}` : 0,
             right: 0,
             zIndex: 1100,
           }}
@@ -127,7 +127,7 @@ function App() {
           <Box sx={{ height: `${headerHeight}px` }} />
         )}
 
-        <Box sx={{ padding: '24px' }}>
+        <Box sx={{ padding: '12px 20px' }}>
           <Routes>
           {role !== "PROVIDER" && <Route path="/" element={window.localStorage.getItem('token') ? <LoggedHome /> : <Home />} />}
           <Route path="/login" element={<Login />} />

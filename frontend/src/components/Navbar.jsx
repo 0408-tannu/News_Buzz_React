@@ -887,6 +887,8 @@ import { GET, POST } from '../api';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import TravelExploreRoundedIcon from '@mui/icons-material/TravelExploreRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import Tooltip from '@mui/material/Tooltip';
 import toast from 'react-hot-toast';
 import Logo from './Logo';
@@ -1269,16 +1271,25 @@ const Navbar = () => {
                         'aria-labelledby': 'basic-button',
                       }}
                       anchorOrigin={{
-                        vertical: 'bottom', // Align the bottom of the menu with the button
-                        horizontal: 'center', // Align the left side of the menu with the button
+                        vertical: 'bottom',
+                        horizontal: 'center',
                       }}
                       transformOrigin={{
-                        vertical: 'top', // Align the top of the menu with the button
-                        horizontal: 'center', // Align the right side of the menu with the button
+                        vertical: 'top',
+                        horizontal: 'center',
+                      }}
+                      sx={{
+                        mt: 1,
+                        '& .MuiPaper-root': {
+                          borderRadius: '16px',
+                          bgcolor: mode === 'dark' ? '#2a2a2a' : '#fff',
+                          boxShadow: mode === 'dark' ? '0 8px 32px rgba(0,0,0,0.5)' : '0 8px 32px rgba(0,0,0,0.12)',
+                          border: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
+                        },
                       }}
                     >
-                      <Box sx={{ p: 2 }}>
-                        <Typography fontWeight="bold" fontSize="x-large" sx={{ fontFamily: "Quicksand", width: "100%", textAlign: "center", pb: 2 }}>
+                      <Box sx={{ p: 2.5 }}>
+                        <Typography fontWeight={800} fontSize="1.2rem" sx={{ fontFamily: "Quicksand", width: "100%", textAlign: "center", pb: 2, color: mode === 'dark' ? '#fff' : '#1a1a2e' }}>
                           Advanced Search
                         </Typography>
                         {/* Site Input Section */}
@@ -1530,41 +1541,77 @@ const Navbar = () => {
             </>)}
 
             {!TokenExist && (
-              <div style={{ marginLeft: 'auto' }}>
-                <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
-                <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
+              <div style={{ marginLeft: 'auto', display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <Button
+                  component={Link}
+                  to="/login"
+                  variant="outlined"
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: '15px',
+                    borderRadius: '50px',
+                    px: 3,
+                    py: 0.7,
+                    borderWidth: '1.5px',
+                    borderColor: mode === 'dark' ? 'rgba(30,144,255,0.4)' : 'rgba(30,144,255,0.5)',
+                    color: mode === 'dark' ? '#90CAF9' : '#1E90FF',
+                    '&:hover': {
+                      borderWidth: '1.5px',
+                      borderColor: '#1E90FF',
+                      backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.1)' : 'rgba(30,144,255,0.05)',
+                    },
+                  }}
+                >
+                  Login
+                </Button>
+                <Button
+                  component={Link}
+                  to="/signup"
+                  variant="contained"
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: '15px',
+                    borderRadius: '50px',
+                    px: 3,
+                    py: 0.7,
+                    background: 'linear-gradient(135deg, #1E90FF 0%, #0055CC 100%)',
+                    boxShadow: '0 2px 8px rgba(30,144,255,0.3)',
+                    '&:hover': {
+                      background: 'linear-gradient(135deg, #4DA8FF 0%, #1E90FF 100%)',
+                      boxShadow: '0 4px 16px rgba(30,144,255,0.4)',
+                    },
+                  }}
+                >
+                  Sign Up
+                </Button>
               </div>
             )}
 
             {TokenExist && (
               <Tooltip title="My Account" placement="bottom" arrow>
-                <Button
+                <IconButton
                   onClick={() => navigate('/account')}
-                  startIcon={<AccountCircleRoundedIcon sx={{ fontSize: 42 }} />}
                   sx={{
-                    color: mode === 'dark' ? '#fff' : '#1a1a2e',
-                    textTransform: 'none',
-                    fontFamily: 'Quicksand, Arial, sans-serif',
-                    fontWeight: 800,
-                    fontSize: '1.25rem',
-                    letterSpacing: '0.3px',
-                    px: 2,
-                    py: 0.8,
-                    borderRadius: '50px',
-                    border: mode === 'dark' ? '1.5px solid rgba(255,255,255,0.15)' : '1.5px solid rgba(0,0,0,0.1)',
-                    whiteSpace: 'nowrap',
-                    marginLeft: 'auto',
-                    mr: 1,
-                    '&:hover': {
-                      backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.12)' : 'rgba(30,144,255,0.06)',
-                      borderColor: 'rgb(30,144,255)',
-                      color: 'rgb(30,144,255)',
-                    },
+                    ml: 1,
+                    width: 42,
+                    height: 42,
+                    background: mode === 'dark'
+                      ? 'linear-gradient(135deg, rgba(30,144,255,0.15) 0%, rgba(99,102,241,0.15) 100%)'
+                      : 'linear-gradient(135deg, rgba(30,144,255,0.08) 0%, rgba(99,102,241,0.08) 100%)',
+                    border: `1.5px solid ${mode === 'dark' ? 'rgba(30,144,255,0.25)' : 'rgba(30,144,255,0.2)'}`,
                     transition: 'all 0.25s ease',
+                    '&:hover': {
+                      background: mode === 'dark'
+                        ? 'linear-gradient(135deg, rgba(30,144,255,0.25) 0%, rgba(99,102,241,0.25) 100%)'
+                        : 'linear-gradient(135deg, rgba(30,144,255,0.15) 0%, rgba(99,102,241,0.15) 100%)',
+                      borderColor: '#1E90FF',
+                      transform: 'scale(1.05)',
+                      boxShadow: '0 3px 12px rgba(30,144,255,0.2)',
+                    },
                   }}
                 >
-                  My Account
-                </Button>
+                  <AccountCircleRoundedIcon sx={{ fontSize: 26, color: mode === 'dark' ? '#90CAF9' : '#1E90FF' }} />
+                </IconButton>
               </Tooltip>
             )}
           </div>
@@ -1580,16 +1627,16 @@ const Navbar = () => {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          padding: '8px 0',
+          padding: '8px 16px',
           overflowX: 'auto',
-          backgroundColor: mode === 'dark' ? 'rgba(30,30,30,0.95)' : 'rgba(255,255,255,0.95)',
+          backgroundColor: mode === 'dark' ? 'rgba(26,26,26,0.98)' : 'rgba(248,249,250,0.98)',
           backdropFilter: 'blur(10px)',
           color: mode === 'dark' ? '#fff' : '#000',
           zIndex: 1,
-          marginLeft: '20px',
-          gap: '4px',
-          '&::-webkit-scrollbar': { height: '4px' },
-          '&::-webkit-scrollbar-thumb': { background: 'rgba(128,128,128,0.3)', borderRadius: '2px' },
+          gap: '6px',
+          borderTop: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)'}`,
+          '&::-webkit-scrollbar': { height: '3px' },
+          '&::-webkit-scrollbar-thumb': { background: 'rgba(128,128,128,0.2)', borderRadius: '2px' },
         }}
       >
         <div>
@@ -1599,16 +1646,27 @@ const Navbar = () => {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             onClick={handleClick}
-            endIcon={<KeyboardArrowDownRoundedIcon />}
-            color='error'
+            startIcon={<PublicRoundedIcon sx={{ fontSize: '20px !important' }} />}
+            endIcon={<KeyboardArrowDownRoundedIcon sx={{ fontSize: '18px !important', opacity: 0.7 }} />}
             sx={{
-              fontWeight: 'bold',
-              fontSize: 'large',
+              fontWeight: 700,
+              fontSize: '14px',
               fontFamily: "Quicksand",
-              color: mode === 'dark' ? 'rgb(255, 255, 255)' : '#000', // Button text color for both modes
-              backgroundColor: mode === 'dark' ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)', // Button background color for both modes
-              m: 0.3,
-
+              color: mode === 'dark' ? '#90CAF9' : '#1E90FF',
+              backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.1)' : 'rgba(30,144,255,0.06)',
+              border: `1.5px solid ${mode === 'dark' ? 'rgba(30,144,255,0.3)' : 'rgba(30,144,255,0.25)'}`,
+              borderRadius: '50px',
+              px: 2,
+              py: 0.5,
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+              transition: 'all 0.25s ease',
+              '&:hover': {
+                backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.18)' : 'rgba(30,144,255,0.12)',
+                borderColor: '#1E90FF',
+                transform: 'translateY(-1px)',
+                boxShadow: '0 3px 12px rgba(30,144,255,0.2)',
+              },
             }}
           >
             Global
@@ -1618,16 +1676,56 @@ const Navbar = () => {
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
-            sx={{ p: 0 }}
+            sx={{
+              mt: 1.5,
+              '& .MuiPaper-root': {
+                borderRadius: '20px',
+                bgcolor: mode === 'dark' ? '#1e1e1e' : '#fff',
+                boxShadow: mode === 'dark'
+                  ? '0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06)'
+                  : '0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04)',
+                p: 2.5,
+                minWidth: 300,
+              },
+            }}
             MenuListProps={{
               'aria-labelledby': 'basic-button',
+              sx: { p: 0 },
             }}
           >
-            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-filled-label">Country</InputLabel>
+            <Typography sx={{
+              fontFamily: "'Quicksand', sans-serif",
+              fontWeight: 800,
+              fontSize: '0.85rem',
+              color: mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.35)',
+              textTransform: 'uppercase',
+              letterSpacing: '1.5px',
+              mb: 2,
+              px: 0.5,
+            }}>
+              Location Filter
+            </Typography>
+            <FormControl
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{
+                mb: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+                  '& fieldset': { borderColor: mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' },
+                  '&:hover fieldset': { borderColor: '#1E90FF' },
+                  '&.Mui-focused fieldset': { borderColor: '#1E90FF', borderWidth: '2px' },
+                },
+                '& .MuiInputLabel-root': { fontSize: '14px', fontWeight: 500 },
+              }}
+            >
+              <InputLabel>Country</InputLabel>
               <Select
-                labelId="demo-simple-select-filled-label"
-                id="demo-simple-select-filled"
+                label="Country"
                 value={country}
                 onChange={handleCountryChange}
               >
@@ -1636,11 +1734,27 @@ const Navbar = () => {
                 ))}
               </Select>
             </FormControl>
-            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-filled-label">State</InputLabel>
+            <FormControl
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{
+                mb: 1.5,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+                  '& fieldset': { borderColor: mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' },
+                  '&:hover fieldset': { borderColor: '#1E90FF' },
+                  '&.Mui-focused fieldset': { borderColor: '#1E90FF', borderWidth: '2px' },
+                },
+                '& .MuiInputLabel-root': { fontSize: '14px', fontWeight: 500 },
+              }}
+            >
+              <InputLabel>State</InputLabel>
               <Select
-                labelId="demo-simple-select-filled-label"
-                id="demo-simple-select-filled"
+                label="State"
                 value={state}
                 onChange={(e) => { setState(e.target.value) }}
               >
@@ -1649,11 +1763,27 @@ const Navbar = () => {
                 ))}
               </Select>
             </FormControl>
-            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-filled-label">City</InputLabel>
+            <FormControl
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{
+                mb: 2,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+                  '& fieldset': { borderColor: mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' },
+                  '&:hover fieldset': { borderColor: '#1E90FF' },
+                  '&.Mui-focused fieldset': { borderColor: '#1E90FF', borderWidth: '2px' },
+                },
+                '& .MuiInputLabel-root': { fontSize: '14px', fontWeight: 500 },
+              }}
+            >
+              <InputLabel>City</InputLabel>
               <Select
-                labelId="demo-simple-select-filled-label"
-                id="demo-simple-select-filled"
+                label="City"
                 value={city}
                 onChange={(e) => { setCity(e.target.value) }}
               >
@@ -1662,22 +1792,32 @@ const Navbar = () => {
                 ))}
               </Select>
             </FormControl>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  // Add your search logic here
-                  console.log('Search button clicked');
-                  navigate(`/search?gl=${countryCode}&location=${city.name ? city.name : state.name ? state.name : ""}`);
-                }}
-                sx={{ fontWeight: "bold", fontSize: "large", borderRadius: 2, m: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', width: '80%' }}
-                endIcon={<TravelExploreRoundedIcon fontSize='large' />}
-
-              >
-                Localized News
-              </Button>
-            </div>
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={() => {
+                navigate(`/search?gl=${countryCode}&location=${city.name ? city.name : state.name ? state.name : ""}`);
+                handleClose();
+              }}
+              sx={{
+                fontWeight: 700,
+                fontSize: '14px',
+                borderRadius: '12px',
+                py: 1.2,
+                textTransform: 'none',
+                background: 'linear-gradient(135deg, #1E90FF 0%, #0055CC 100%)',
+                boxShadow: '0 2px 8px rgba(30,144,255,0.3)',
+                '&:hover': {
+                  background: 'linear-gradient(135deg, #4DA8FF 0%, #1E90FF 100%)',
+                  boxShadow: '0 4px 16px rgba(30,144,255,0.4)',
+                  transform: 'translateY(-1px)',
+                },
+                transition: 'all 0.25s ease',
+              }}
+              endIcon={<TravelExploreRoundedIcon />}
+            >
+              Find Localized News
+            </Button>
           </Menu>
         </div>
 
@@ -1746,18 +1886,31 @@ const Navbar = () => {
             aria-haspopup="true"
             aria-expanded={showAddBox ? 'true' : undefined}
             onClick={(e) => {
-              setAnchorElAddBox(e.currentTarget); // Track the button's position
-              setShowAddBox(!showAddBox); // Toggle the Add Box
+              setAnchorElAddBox(e.currentTarget);
+              setShowAddBox(!showAddBox);
             }}
-            endIcon={<KeyboardArrowDownRoundedIcon />}
-            color="error"
+            startIcon={<AddRoundedIcon sx={{ fontSize: '18px !important' }} />}
             sx={{
-              mr: 2,
-              fontWeight: 'bold',
-              fontSize: '18px',
+              mr: 1,
+              fontWeight: 700,
+              fontSize: '14px',
               fontFamily: 'Quicksand',
-              color: mode === 'dark' ? 'rgb(255, 255, 255)' : '#000',
+              color: mode === 'dark' ? '#90CAF9' : '#1E90FF',
+              backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.1)' : 'rgba(30,144,255,0.06)',
+              border: `1.5px solid ${mode === 'dark' ? 'rgba(30,144,255,0.3)' : 'rgba(30,144,255,0.25)'}`,
+              borderRadius: '50px',
+              px: 2,
+              py: 0.5,
+              textTransform: 'none',
+              letterSpacing: '0.3px',
               display: advancedSearchOpen ? 'none' : 'flex',
+              transition: 'all 0.25s ease',
+              '&:hover': {
+                backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.18)' : 'rgba(30,144,255,0.12)',
+                borderColor: '#1E90FF',
+                transform: 'translateY(-1px)',
+                boxShadow: '0 3px 12px rgba(30,144,255,0.2)',
+              },
             }}
           >
             Add Topic
@@ -1769,12 +1922,12 @@ const Navbar = () => {
             open={showAddBox}
             onClose={() => setShowAddBox(false)}
             sx={{
-              mt: 1.4,
-              ml: -1, // Shift the box slightly to the left
+              mt: 1,
               '& .MuiPaper-root': {
-                bgcolor: mode === 'dark' ? '#424242' : '#fff',
-                boxShadow: 3,
-                borderRadius: 1,
+                bgcolor: mode === 'dark' ? '#2a2a2a' : '#fff',
+                boxShadow: mode === 'dark' ? '0 8px 32px rgba(0,0,0,0.5)' : '0 8px 32px rgba(0,0,0,0.12)',
+                borderRadius: '16px',
+                border: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
               },
             }}
             MenuListProps={{
@@ -1785,20 +1938,31 @@ const Navbar = () => {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 1,
-                minWidth: '200px',
-                p: 1,
+                gap: 1.5,
+                minWidth: '240px',
+                p: 2,
               }}
             >
               <TextField
                 value={newQuickSearch}
                 onChange={(e) => setNewQuickSearch(e.target.value)}
-                placeholder="Topic Name"
+                placeholder="e.g. Technology, Sports..."
                 size="small"
                 sx={{
-                  '& .MuiInputBase-root': {
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: '12px',
                     color: mode === 'dark' ? '#fff' : '#000',
-                    bgcolor: mode === 'dark' ? '#333' : '#f5f5f5',
+                    bgcolor: mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.03)',
+                    '& fieldset': {
+                      borderColor: mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#1E90FF',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#1E90FF',
+                      borderWidth: '2px',
+                    },
                   },
                 }}
               />
@@ -1812,9 +1976,17 @@ const Navbar = () => {
                 sx={{
                   fontFamily: 'Quicksand',
                   width: '100%',
+                  borderRadius: '12px',
+                  fontWeight: 700,
+                  background: 'linear-gradient(135deg, #1E90FF 0%, #0055CC 100%)',
+                  boxShadow: '0 2px 8px rgba(30,144,255,0.3)',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #4DA8FF 0%, #1E90FF 100%)',
+                    boxShadow: '0 4px 16px rgba(30,144,255,0.4)',
+                  },
                 }}
               >
-                Add
+                Add Topic
               </Button>
             </Box>
           </Menu>

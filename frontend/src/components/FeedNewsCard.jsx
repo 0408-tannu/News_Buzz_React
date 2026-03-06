@@ -827,8 +827,9 @@ const FeedNewsCard = (props) => {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   width: "100%",
-                  height: "40px",
+                  height: "28px",
                   overflow: "hidden",
+                  marginBottom: "6px",
                 }}
               >
                 {isSearchPage ? (
@@ -863,6 +864,7 @@ const FeedNewsCard = (props) => {
                       display: "flex",
                       justifyContent: "flex-start",
                       alignItems: "center",
+                      gap: "8px",
                     }}
                   >
                     {props.providerImg && (
@@ -871,178 +873,189 @@ const FeedNewsCard = (props) => {
                         alt="Provider Logo"
                         onError={(e) => { e.target.style.display = 'none'; }}
                         style={{
-                          width: "28px",
-                          height: "28px",
+                          width: "20px",
+                          height: "20px",
                           objectFit: "contain",
+                          borderRadius: "4px",
                         }}
                       />
+                    )}
+                    {props.providerName && (
+                      <span style={{
+                        fontSize: "13px",
+                        fontWeight: 600,
+                        color: mode === "light" ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)",
+                        fontFamily: "'Quicksand', sans-serif",
+                        letterSpacing: "0.2px",
+                      }}>
+                        {props.providerName}
+                      </span>
                     )}
                   </div>
                 )}
               </div>
 
-              {props.imgURL && (
-                <Box
+              <Tooltip
+                title="Read article"
+                placement="top"
+                TransitionComponent={Zoom}
+                arrow
+              >
+                <Typography
+                  variant="h6"
+                  component="div"
+                  onClick={handleClick}
                   sx={{
-                    width: "100%",
-                    height: "300px",
+                    cursor: "pointer",
+                    color: mode === "light" ? "#1a1a2e" : "rgba(255,255,255,0.92)",
+                    fontWeight: 700,
+                    fontSize: "1.05rem",
+                    lineHeight: 1.45,
+                    mb: 0.5,
+                    transition: "color 0.2s ease",
+                    "&:hover": { color: "#1E90FF" },
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
+                  {props.title}
+                </Typography>
+              </Tooltip>
+
+              {props.someText && (
+                <Typography variant="body2" sx={{ color: mode === "light" ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.6)", lineHeight: 1.6, mt: 0.5 }}>
+                  {props.someText}
+                </Typography>
+              )}
+
+              {props.imgURL && (
+                <Box sx={{ mt: 1.5 }}>
+                  <img
+                    src={props.imgURL}
+                    alt="Article"
+                    onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+                    style={{
                       width: "100%",
-                      height: "300px",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: 2,
+                      maxHeight: "300px",
+                      objectFit: "cover",
+                      borderRadius: "12px",
                     }}
-                  >
-                    <img
-                      src={props.imgURL}
-                      alt="Article"
-                      onError={(e) => { e.target.parentElement.parentElement.style.display = 'none'; }}
-                      style={{
-                        width: "100%",
-                        height: "300px",
-                        alignSelf: "center",
-                        maxWidth: "100%",
-                        maxHeight: "300px",
-                        objectFit: "cover",
-                        borderRadius: "12px",
-                      }}
-                    />
-                  </Box>
+                  />
                 </Box>
               )}
             </CardContent>
           </Box>
-          {/* Title with Tooltip */}
-          <Tooltip
-            title="Read article"
-            placement="top"
-            TransitionComponent={Zoom}
-            arrow
-          >
-            <Typography
-              variant="h6"
-              component="div"
-              gutterBottom
-              onClick={handleClick}
-              sx={{
-                cursor: "pointer",
-                color: mode === "light" ? "#1a1a2e" : "rgb(120, 180, 255)",
-                fontWeight: 600,
-                lineHeight: 1.4,
-                transition: "color 0.2s ease",
-                "&:hover": { color: "rgb(30, 144, 255)" },
-                pl: 2,
-              }}
-            >
-              {props.title}
-            </Typography>
-          </Tooltip>
 
-          {/* Some Text */}
-          {props.someText && (
-            <Typography variant="body2" sx={{ color: mode === "light" ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.6)", lineHeight: 1.6, pl: 2 }}>
-              {props.someText}
-            </Typography>
-          )}
-
-          {/* Time Display */}
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              mt: 2,
+              px: 2,
+              pb: 1,
+              pt: 1,
             }}
           >
-            <Typography variant="caption" sx={{ color: mode === "light" ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.45)", fontSize: "0.95rem", fontWeight: 500, pl: 2 }}>
-              {props.time}
-            </Typography>
-
-            <Box className="feed-action-buttons" sx={{ display: "flex", alignItems: "center", opacity: 0, visibility: "hidden", transition: "all 0.25s ease" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+              }}
+            >
+              <Typography
+                variant="caption"
+                sx={{
+                  color: mode === "light" ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.45)",
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                }}
+              >
+                {props.time}
+              </Typography>
+            </Box>
+            <Box className="feed-action-buttons" sx={{ display: "flex", alignItems: "center", gap: "2px", opacity: 0, visibility: "hidden", transition: "all 0.25s ease", pr: 1 }}>
               <Tooltip title="Save" placement="bottom" arrow>
                 <IconButton
-                  sx={{
-                    height: "48px",
-                    width: "48px",
-                    alignSelf: "center",
-                    marginBottom: "8px",
-                  }}
+                  size="small"
                   aria-label="save"
                   onClick={handleBookmarkClick}
+                  sx={{
+                    color: bookmarked ? "#1E90FF" : (mode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)"),
+                    '&:hover': { color: "#1E90FF", backgroundColor: "rgba(30,144,255,0.08)" },
+                  }}
                 >
                   {bookmarked ? (
-                    <BookmarkIcon
-                      sx={{ fontSize: "28px", color: "primary.main" }}
-                    />
+                    <BookmarkIcon sx={{ fontSize: 20 }} />
                   ) : (
-                    <BookmarkBorderIcon sx={{ fontSize: "28px" }} />
+                    <BookmarkBorderIcon sx={{ fontSize: 20 }} />
                   )}
                 </IconButton>
               </Tooltip>
 
               <Tooltip title="Like" placement="bottom" arrow>
                 <IconButton
-                  sx={{
-                    height: "48px",
-                    width: "48px",
-                    alignSelf: "center",
-                    marginBottom: "4px",
-                  }}
+                  size="small"
                   aria-label="like"
                   onClick={handleLikeClick}
+                  sx={{
+                    color: liked ? "#FF3B5C" : (mode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)"),
+                    '&:hover': { color: "#FF3B5C", backgroundColor: "rgba(255,59,92,0.08)" },
+                  }}
                 >
                   {liked ? (
-                    <HeartIcon sx={{ fontSize: "28px", color: "red" }} />
+                    <HeartIcon sx={{ fontSize: 20 }} />
                   ) : (
-                    <HeartBorderIcon sx={{ fontSize: "28px" }} />
+                    <HeartBorderIcon sx={{ fontSize: 20 }} />
                   )}
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    sx={{
-                      paddingLeft: "2px",
-                      // position: "absolute",
-                      transition: "transform 0.3s ease",
-                      transform: animate
-                        ? animateDirection === "up" // If likes are increasing, move up
-                          ? "translateY(-100%)"
-                          : "translateY(100%)" // If likes are decreasing, move down
-                        : "translateY(0)",
-                      opacity: animate ? 0 : 1,
-                    }}
-                    key={numLikes} // Helps with animation triggering
-                  >
-                    {numLikes} {/* Assuming likeCount is passed as a prop */}
-                  </Typography>
                 </IconButton>
               </Tooltip>
+              {numLikes > 0 && (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: mode === "dark" ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.4)",
+                    ml: -0.5,
+                    mr: 0.5,
+                    transition: "transform 0.3s ease, opacity 0.3s ease",
+                    transform: animate
+                      ? animateDirection === "up" ? "translateY(-100%)" : "translateY(100%)"
+                      : "translateY(0)",
+                    opacity: animate ? 0 : 1,
+                  }}
+                  key={numLikes}
+                >
+                  {numLikes}
+                </Typography>
+              )}
 
               <Tooltip title="Comments" placement="bottom" arrow>
                 <IconButton
-                  sx={{
-                    height: "48px",
-                    width: "48px",
-                    alignSelf: "center",
-                    marginBottom: "8px",
-                  }}
+                  size="small"
                   aria-label="comments"
                   onClick={handleCommentsClick}
+                  sx={{
+                    color: mode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
+                    '&:hover': { color: "#1E90FF", backgroundColor: "rgba(30,144,255,0.08)" },
+                  }}
                 >
-                  <InsertCommentRoundedIcon sx={{ fontSize: "28px" }} />
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    style={{ paddingLeft: "2px" }}
-                  >
-                    {numComments}
-                  </Typography>
+                  <InsertCommentRoundedIcon sx={{ fontSize: 18 }} />
                 </IconButton>
               </Tooltip>
+              {numComments > 0 && (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    color: mode === "dark" ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.4)",
+                    ml: -0.5,
+                    mr: 0.5,
+                  }}
+                >
+                  {numComments}
+                </Typography>
+              )}
+
               <CommentsMenu
                 isOpen={showComments}
                 anchorEl={anchorEl}
@@ -1053,15 +1066,15 @@ const FeedNewsCard = (props) => {
 
               <Tooltip title="Share" placement="bottom" arrow>
                 <IconButton
-                  sx={{
-                    height: "48px",
-                    width: "48px",
-                    alignSelf: "center",
-                  }}
+                  size="small"
                   aria-label="share"
                   onClick={() => setShowShareDialog(true)}
+                  sx={{
+                    color: mode === "dark" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)",
+                    '&:hover': { color: "#1E90FF", backgroundColor: "rgba(30,144,255,0.08)" },
+                  }}
                 >
-                  <ShareIcon sx={{ fontSize: "28px" }} />
+                  <ShareIcon sx={{ fontSize: 18 }} />
                 </IconButton>
               </Tooltip>
             </Box>
