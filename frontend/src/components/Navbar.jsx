@@ -1043,9 +1043,10 @@ const Navbar = () => {
 
   const navbarStyle = {
     position: 'relative',
-    backgroundColor: mode === 'dark' ? '#f0f0f0' : '#464646',
-    backdropFilter: "blur(10px)",
+    backgroundColor: mode === 'dark' ? 'rgba(26, 26, 26, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+    backdropFilter: "blur(20px)",
     paddingLeft: '20px',
+    borderBottom: mode === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,0,0.06)',
   };
 
   const afterStyle = {
@@ -1151,7 +1152,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg" style={navbarStyle}>
         <div className="container-fluid">
           {/* <Link className={`navbar-brand ${mode === 'dark' ? 'text-dark' : 'text-light'}`} to="/">NewsBuzz</Link> */}
-          <Link className={`navbar-brand ${mode === 'dark' ? 'text-dark' : 'text-light'}`} to="/">
+          <Link className={`navbar-brand ${mode === 'dark' ? 'text-light' : 'text-dark'}`} to="/">
             <img src={logo} alt="NewsBuzz" style={{ height: '40px' }} />
           </Link>
 
@@ -1160,7 +1161,7 @@ const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
-                  className={`nav-link active ${mode === 'dark' ? 'text-dark' : 'text-light'}`}
+                  className={`nav-link active ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
                   aria-current="page"
                   to="/"
                   style={{ fontSize: '18px' }} // Adjust the size here
@@ -1170,7 +1171,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <Link
-                  className={`nav-link ${mode === 'dark' ? 'text-dark' : 'text-light'}`}
+                  className={`nav-link ${mode === 'dark' ? 'text-light' : 'text-dark'}`}
                   to="/providers/all"
                   style={{ fontSize: '18px' }} // Adjust the size here
                 >
@@ -1182,65 +1183,88 @@ const Navbar = () => {
 
             {TokenExist && (<>
               <div>
-                <div className="d-flex mx-auto" style={{ flexGrow: 1, justifyContent: 'center' }}>
-                  <input
-                    className="form-control me-2"
-                    type="search"
-                    placeholder="Search for topics"
-                    aria-label="Search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{ maxWidth: '300px' }}
-                  />
-
-                  <div className="btn-group">
+                <div className="d-flex mx-auto" style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Box
+                    component="form"
+                    onSubmit={handleSearch}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      backgroundColor: mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)',
+                      borderRadius: '50px',
+                      padding: '4px 6px 4px 20px',
+                      width: '500px',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      border: '2px solid transparent',
+                      '&:focus-within': {
+                        width: '600px',
+                        backgroundColor: mode === 'dark' ? 'rgba(255,255,255,0.15)' : '#fff',
+                        border: '2px solid rgb(30, 144, 255)',
+                        boxShadow: '0 4px 20px rgba(30, 144, 255, 0.15)',
+                      },
+                      '&:hover': {
+                        backgroundColor: mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)',
+                      },
+                    }}
+                  >
+                    <TravelExploreRoundedIcon sx={{ color: mode === 'dark' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)', mr: 1, fontSize: '22px' }} />
+                    <input
+                      type="search"
+                      placeholder="Search for news, topics, sources..."
+                      aria-label="Search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      style={{
+                        border: 'none',
+                        outline: 'none',
+                        background: 'transparent',
+                        flex: 1,
+                        fontSize: '15px',
+                        fontFamily: "'Quicksand', sans-serif",
+                        fontWeight: 500,
+                        color: mode === 'dark' ? '#fff' : '#1a1a2e',
+                        padding: '10px 0',
+                      }}
+                    />
                     <Button
                       variant="contained"
                       size="small"
                       sx={{
-                        backgroundColor: 'lightgreen',
-                        borderRadius: '8px 0 0 8px',
-                        padding: '8px 16px',
-                        border: '1px solid green',
-                        boxShadow: 'none', // Remove any shadow
+                        background: 'linear-gradient(135deg, #1e90ff 0%, #0066cc 100%)',
+                        borderRadius: '50px',
+                        padding: '8px 20px',
+                        boxShadow: 'none',
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        fontSize: '14px',
+                        fontFamily: "'Quicksand', sans-serif",
                         '&:hover': {
-                          backgroundColor: 'rgb(116, 200, 116)',
-                          boxShadow: 'none', // Ensure no shadow on hover
+                          background: 'linear-gradient(135deg, #0066cc 0%, #004999 100%)',
+                          boxShadow: '0 2px 8px rgba(30, 144, 255, 0.3)',
                         },
-                        transition: 'background-color 0.3s ease', // Smooth color transition
-                        color: "black"
+                        transition: 'all 0.3s ease',
+                        color: '#fff',
                       }}
                       onClick={handleSearch}
                     >
                       Search
                     </Button>
-
-                  </div>
-                  <div>
                     <IconButton
-                      id="demo-customized-button"
-                      aria-controls={open_ ? 'demo-customized-menu' : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open_ ? 'true' : undefined}
-                      variant="outlined"
+                      size="small"
                       sx={{
-                        backgroundColor: 'lightgreen',
-                        borderRadius: '0 8px 8px 0', // Rounded corners for right side
-                        padding: '8px', // Ensure padding matches the Search button
-                        margin: 0, // Remove extra margin
-                        border: '1px solid green', // Consistent border with Search button
-                        minWidth: 0, // Adjust to fit icon properly
+                        ml: 0.5,
+                        color: mode === 'dark' ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.4)',
                         '&:hover': {
-                          backgroundColor: 'rgb(116, 200, 116)',
+                          color: 'rgb(30, 144, 255)',
+                          backgroundColor: 'transparent',
                         },
-                        color: "black"
                       }}
                       onClick={handleClick_}
                     >
-
                       <ExpandMoreRoundedIcon />
                     </IconButton>
-                    <Menu
+                  </Box>
+                  <Menu
                       id="basic-menu"
                       anchorEl={anchorEl_}
                       open={open_}
@@ -1362,7 +1386,6 @@ const Navbar = () => {
                         </Box>
                       </Box>
                     </Menu>
-                  </div>
                 </div>
 
 
@@ -1518,13 +1541,13 @@ const Navbar = () => {
                   startIcon={<AccountCircleRoundedIcon sx={{ fontSize: 28 }} />}
                   sx={{
                     ml: 2,
-                    color: mode === 'dark' ? '#333' : '#f0f0f0',
+                    color: mode === 'dark' ? '#e0e0e0' : '#333',
                     textTransform: 'none',
                     fontFamily: 'Quicksand, Arial, sans-serif',
                     fontWeight: 600,
                     fontSize: '0.95rem',
                     '&:hover': {
-                      backgroundColor: mode === 'dark' ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.15)',
+                      backgroundColor: mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
                     },
                     transition: 'all 0.2s ease',
                   }}
@@ -1557,12 +1580,16 @@ const Navbar = () => {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          padding: '10px 0',
-          overflowX: 'auto', // Handles overflow on small screens
-          backgroundColor: mode === 'dark' ? '#464646' : 'rgb(230, 230, 230)', // Background color for both modes
-          color: mode === 'dark' ? '#fff' : '#000', // Text color for both modes
+          padding: '8px 0',
+          overflowX: 'auto',
+          backgroundColor: mode === 'dark' ? 'rgba(30,30,30,0.95)' : 'rgba(255,255,255,0.95)',
+          backdropFilter: 'blur(10px)',
+          color: mode === 'dark' ? '#fff' : '#000',
           zIndex: 1,
           marginLeft: '20px',
+          gap: '4px',
+          '&::-webkit-scrollbar': { height: '4px' },
+          '&::-webkit-scrollbar-thumb': { background: 'rgba(128,128,128,0.3)', borderRadius: '2px' },
         }}
       >
         <div>
@@ -1659,17 +1686,27 @@ const Navbar = () => {
           <div key={index}>
             <Button
               onClick={() => navigate(`/search?q=${encodeURIComponent(text)}`)}
-              onContextMenu={(e) => handleRightClick(e, text)} // Right-click event to show remove option
+              onContextMenu={(e) => handleRightClick(e, text)}
               sx={{
-                fontSize: 'large',
+                fontSize: '13px',
                 fontFamily: "Quicksand",
-                color: mode === 'dark' ? '#fff' : '#000',
-                boxShadow: 3, // Add some shadow for better visibility
-                borderRadius: 1, // Rounded corners
+                fontWeight: 600,
+                color: mode === 'dark' ? '#e0e0e0' : '#333',
+                boxShadow: 'none',
+                borderRadius: '50px',
                 zIndex: 2,
-                backgroundColor: mode === 'dark' ? '#333' : '#f5f5f5', // Background color for both modes
-                border: `1px solid ${mode === 'dark' ? '#000000' : '#ffffff'}`, // Border for better visibility
+                backgroundColor: mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)',
+                border: `1px solid ${mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'}`,
                 m: 0.3,
+                px: 2,
+                py: 0.5,
+                textTransform: 'none',
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  backgroundColor: mode === 'dark' ? 'rgba(30,144,255,0.15)' : 'rgba(30,144,255,0.08)',
+                  borderColor: 'rgb(30,144,255)',
+                  color: 'rgb(30,144,255)',
+                },
               }}
             >
               {text}
