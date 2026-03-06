@@ -1151,7 +1151,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg" style={navbarStyle}>
         <div className="container-fluid">
           <Link className={`navbar-brand`} to="/" style={{ textDecoration: 'none' }}>
-            <Logo height={42} />
+            <Logo height={52} />
           </Link>
 
 
