@@ -92,7 +92,7 @@ For local setup, follow these steps:
 
 -  Create a **.env** in the client directory
    - LOCAL_BACKEND_URL=http://localhost:3000
-   - LOCAL_FRONTEND_URL=http://localhost:9000
+   - LOCAL_FRONTEND_URL=http://localhost:8000
      
 3. Set up Backend:
     ```bash

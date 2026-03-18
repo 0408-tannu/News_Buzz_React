@@ -1,7 +1,7 @@
 const defaultBackendUrl =
   process.env.NODE_ENV === 'production'
     ? 'https://news-buzz-react-mog3.onrender.com'
-    : 'http://localhost:9000';
+    : 'http://localhost:8000';
 
 const config = {
   BACKEND_API: process.env.REACT_APP_BACKEND_API || defaultBackendUrl,
